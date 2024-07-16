@@ -1,1 +1,352 @@
-
+<?xml version="1.0"?>
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewModels="clr-namespace:AgConn.CrossPlatform.ViewModels" xmlns:local="clr-namespace:AgConn.CrossPlatform" mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450" x:Class="AgConn.CrossPlatform.Views.MainView" d:DataContext="{x:Static local:App.MainViewModel}">
+  <UserControl.Styles>
+    <Style Selector="Button">
+      <Setter Property="CornerRadius" Value="20"/>
+    </Style>
+  </UserControl.Styles>
+  <UserControl.Resources>
+    <StreamGeometry x:Key="save_as_regular">M5.75 3C4.23122 3 3 4.23122 3 5.75V18.25C3 19.7688 4.23122 21 5.75 21H9.99852C9.99129 20.8075 10.011 20.6088 10.0613 20.4075L10.2882 19.5H7.5V14.25C7.5 13.8358 7.83579 13.5 8.25 13.5H14.8531L16.2883 12.0648C16.1158 12.0225 15.9355 12 15.75 12H8.25C7.00736 12 6 13.0074 6 14.25V19.5H5.75C5.05964 19.5 4.5 18.9404 4.5 18.25V5.75C4.5 5.05964 5.05964 4.5 5.75 4.5H7V7.25C7 8.49264 8.00736 9.5 9.25 9.5H13.75C14.9926 9.5 16 8.49264 16 7.25V4.52344C16.3582 4.58269 16.6918 4.75246 16.9519 5.01256L18.9874 7.0481C19.3156 7.37629 19.5 7.8214 19.5 8.28553V10.007C19.5709 10.0024 19.642 10 19.713 10H19.7151C20.1521 10.0002 20.59 10.0874 21 10.2615V8.28553C21 7.42358 20.6576 6.59693 20.0481 5.98744L18.0126 3.9519C17.4031 3.34241 16.5764 3 15.7145 3H5.75ZM8.5 7.25V4.5H14.5V7.25C14.5 7.66421 14.1642 8 13.75 8H9.25C8.83579 8 8.5 7.66421 8.5 7.25Z M19.7152 11H19.7131C19.1285 11.0003 18.5439 11.2234 18.0979 11.6695L12.1955 17.5719C11.8513 17.916 11.6072 18.3472 11.4892 18.8194L11.0315 20.6501C10.8325 21.4462 11.5536 22.1674 12.3497 21.9683L14.1804 21.5106C14.6526 21.3926 15.0838 21.1485 15.4279 20.8043L21.3303 14.9019C22.223 14.0093 22.223 12.5621 21.3303 11.6695C20.8843 11.2234 20.2998 11.0003 19.7152 11Z</StreamGeometry>
+    <StreamGeometry x:Key="upload_regular">M5.25021713,20.5 L18.2502171,20.5037635 C18.6644307,20.5038835 19,20.8397671 19,21.2539806 C19,21.6336764 18.7176637,21.9473899 18.3515577,21.9969463 L18.2497829,22.0037635 L5.24978287,22 C4.83556933,21.9998801 4.5,21.6639964 4.5,21.2497829 C4.5,20.8700871 4.78233634,20.5563736 5.1484423,20.5068172 L5.25021713,20.5 Z M6.21972471,7.21846694 L11.21737,2.22185426 C11.4835159,1.95576328 11.8999028,1.93145946 12.1934928,2.14902198 L12.2776129,2.2215468 L17.2810585,7.21815948 C17.5741518,7.5108525 17.5744763,7.98572612 17.2817833,8.2788194 C17.0156987,8.54526784 16.5990517,8.56975859 16.3052914,8.35210481 L16.2211234,8.27954415 L12.5,4.56423913 L12.5,18.2488622 C12.5,18.6285579 12.2178461,18.9423531 11.8517706,18.9920156 L11.75,18.9988622 C11.3703042,18.9988622 11.056509,18.7167083 11.0068466,18.3506327 L11,18.2488622 L11,4.55923913 L7.28027529,8.27923669 C7.01398122,8.54547574 6.59731504,8.56963874 6.30372605,8.35175395 L6.21961512,8.27912711 C5.95337607,8.01283303 5.92921307,7.59616685 6.14709787,7.30257787 L6.21972471,7.21846694 L11.21737,2.22185426 L6.21972471,7.21846694 Z</StreamGeometry>
+    <StreamGeometry x:Key="location_regular">M24.0049 15.5C20.6912 15.5 18.0049 18.1863 18.0049 21.5C18.0049 24.8137 20.6912 27.5 24.0049 27.5C27.3186 27.5 30.0049 24.8137 30.0049 21.5C30.0049 18.1863 27.3186 15.5 24.0049 15.5ZM20.5049 21.5C20.5049 19.567 22.0719 18 24.0049 18C25.9379 18 27.5049 19.567 27.5049 21.5C27.5049 23.433 25.9379 25 24.0049 25C22.0719 25 20.5049 23.433 20.5049 21.5Z M37 32L26.9115 42.7093C25.3324 44.3856 22.6675 44.3856 21.0884 42.7093L11 32H11.0381L11.0212 31.9801L11 31.955C10.3558 31.1913 9.77758 30.37 9.2743 29.5C7.82785 26.9995 7 24.0964 7 21C7 11.6112 14.6112 4 24 4C33.3888 4 41 11.6112 41 21C41 24.0964 40.1721 26.9995 38.7257 29.5C38.2224 30.37 37.6442 31.1913 37 31.955L36.9788 31.9801L36.9619 32H37ZM35.0566 30.3815C37.2057 27.8515 38.5 24.5801 38.5 21C38.5 12.9919 32.0081 6.5 24 6.5C15.9919 6.5 9.5 12.9919 9.5 21C9.5 24.5801 10.7943 27.8515 12.9434 30.3815L13.2512 30.7438L22.9081 40.995C23.5003 41.6236 24.4996 41.6236 25.0918 40.995L34.7488 30.7438L35.0566 30.3815Z</StreamGeometry>
+    <StreamGeometry x:Key="usb_port_regular">M11,21.2484807 C11,21.6626942 10.6642136,21.9984807 10.25,21.9984807 C9.87030423,21.9984807 9.55650904,21.7163268 9.50684662,21.3502512 L9.5,21.2484807 L9.49913847,16.999286 L8.75413847,17 C7.56327448,17 6.58849355,16.0748384 6.50932928,14.9040488 L6.50413847,14.75 L6.50413847,9.25 C6.50413847,8.26550837 7.13642994,7.42869632 8.0170754,7.12350135 L8.01647156,2.74728603 C8.01647156,2.36759026 8.29862544,2.05379507 8.664701,2.00413265 L8.76647156,1.99728603 L15.267253,1.99728603 C15.6469488,1.99728603 15.960744,2.27943991 16.0104064,2.64551547 L16.017253,2.74728603 L16.0176169,7.13284187 C16.8334724,7.42710136 17.4303803,8.1795358 17.4977817,9.07958645 L17.5041385,9.25 L17.5041385,14.75 C17.5041385,15.940864 16.5789769,16.9156449 15.4081873,16.9948092 L15.2541385,17 L14.4991385,16.999286 L14.500103,21.2454781 C14.500103,21.6596917 14.1643166,21.9954781 13.750103,21.9954781 C13.3704073,21.9954781 13.0566121,21.7133242 13.0069496,21.3472486 L13.000103,21.2454781 L12.9991385,16.999286 L10.9991385,16.999286 L11,21.2484807 Z M15.2541385,8.5 L8.75413847,8.5 C8.3744427,8.5 8.06064751,8.78215388 8.01098508,9.14822944 L8.00413847,9.25 L8.00413847,14.75 C8.00413847,15.1296958 8.28629235,15.443491 8.65236791,15.4931534 L8.75413847,15.5 L13.750103,15.4969974 L13.750103,15.4969974 L13.7931385,15.499286 L15.2541385,15.5 C15.6338342,15.5 15.9476294,15.2178461 15.9972919,14.8517706 L16.0041385,14.75 L16.0041385,9.25 C16.0041385,8.87030423 15.7219846,8.55650904 15.355909,8.50684662 L15.2541385,8.5 Z M14.517,3.497 L9.516,3.497 L9.516,6.999 L14.517,6.999 L14.517,3.497 Z</StreamGeometry>
+    <StreamGeometry x:Key="serial_port_regular">M6.99998 11.5C7.4142 11.5 7.74998 11.1642 7.74998 10.75C7.74998 10.3358 7.4142 10 6.99998 10C6.58577 10 6.24998 10.3358 6.24998 10.75C6.24998 11.1642 6.58577 11.5 6.99998 11.5Z M10.25 10.75C10.25 11.1642 9.9142 11.5 9.49998 11.5C9.08577 11.5 8.74998 11.1642 8.74998 10.75C8.74998 10.3358 9.08577 10 9.49998 10C9.9142 10 10.25 10.3358 10.25 10.75Z M8.24998 14C8.6642 14 8.99998 13.6642 8.99998 13.25C8.99998 12.8358 8.6642 12.5 8.24998 12.5C7.83577 12.5 7.49998 12.8358 7.49998 13.25C7.49998 13.6642 7.83577 14 8.24998 14Z M11.5 13.25C11.5 13.6642 11.1642 14 10.75 14C10.3358 14 9.99998 13.6642 9.99998 13.25C9.99998 12.8358 10.3358 12.5 10.75 12.5C11.1642 12.5 11.5 12.8358 11.5 13.25Z M13.25 14C13.6642 14 14 13.6642 14 13.25C14 12.8358 13.6642 12.5 13.25 12.5C12.8358 12.5 12.5 12.8358 12.5 13.25C12.5 13.6642 12.8358 14 13.25 14Z M16.5 13.25C16.5 13.6642 16.1642 14 15.75 14C15.3358 14 15 13.6642 15 13.25C15 12.8358 15.3358 12.5 15.75 12.5C16.1642 12.5 16.5 12.8358 16.5 13.25Z M12 11.5C12.4142 11.5 12.75 11.1642 12.75 10.75C12.75 10.3358 12.4142 10 12 10C11.5858 10 11.25 10.3358 11.25 10.75C11.25 11.1642 11.5858 11.5 12 11.5Z M15.25 10.75C15.25 11.1642 14.9142 11.5 14.5 11.5C14.0858 11.5 13.75 11.1642 13.75 10.75C13.75 10.3358 14.0858 10 14.5 10C14.9142 10 15.25 10.3358 15.25 10.75Z M17 11.5C17.4142 11.5 17.75 11.1642 17.75 10.75C17.75 10.3358 17.4142 10 17 10C16.5858 10 16.25 10.3358 16.25 10.75C16.25 11.1642 16.5858 11.5 17 11.5Z M4.90701 6.99933C3.13073 6.99933 1.82042 8.65816 2.23177 10.3862L3.30329 14.8875C3.5982 16.1263 4.70507 17.0007 5.97854 17.0007H18.0172C19.2901 17.0007 20.3966 16.1271 20.6921 14.889L21.7664 10.3877C22.1789 8.65932 20.8685 6.99933 19.0915 6.99933H4.90701ZM3.69099 10.0388C3.50402 9.25334 4.09961 8.49933 4.90701 8.49933H19.0915C19.8992 8.49933 20.4949 9.25387 20.3074 10.0395L19.2331 14.5408C19.0988 15.1036 18.5958 15.5007 18.0172 15.5007H5.97854C5.39969 15.5007 4.89657 15.1032 4.76252 14.5401L3.69099 10.0388Z</StreamGeometry>
+    <StreamGeometry x:Key="sound_source_regular">M14.6497962,15.7263586 L14.7399401,15.8139341 L22.4793884,24.3273272 C22.6467265,24.5113992 22.7394483,24.751234 22.7394483,25 C22.7394483,25.5128358 22.3534081,25.9355072 21.8560694,25.9932723 L21.7394483,26 L6.26054465,26 C6.01178566,26 5.77195088,25.9072782 5.58787891,25.7399401 C5.21065649,25.3970106 5.15597791,24.8317405 5.44199817,24.4253848 L5.52061163,24.3273272 L13.2600599,15.8139341 C13.2814025,15.7904572 13.3038503,15.7680094 13.3273272,15.7466668 C13.7045496,15.4037373 14.2724576,15.4030196 14.6497962,15.7263586 Z M14,17.2299103 L7.39082756,24.5 L20.6091724,24.5 L14,17.2299103 Z M14,2 C21.1797017,2 27,7.82029825 27,15 C27,18.2793134 25.7857775,21.27503 23.7823937,23.5620884 L23.6905236,23.4372331 L23.5892985,23.318318 L22.7800259,22.427431 C24.4768116,20.4236598 25.5,17.8313191 25.5,15 C25.5,8.64872538 20.3512746,3.5 14,3.5 C7.64872538,3.5 2.5,8.64872538 2.5,15 C2.5,17.8313191 3.52318836,20.4236598 5.21997406,22.427431 L4.41070152,23.318318 C4.344361,23.3912926 4.28314322,23.4773257 4.22702717,23.574518 C2.21632355,21.2802112 1,18.2821494 1,15 C1,7.82029825 6.82029825,2 14,2 Z M14,6 C18.9705627,6 23,10.0294373 23,15 C23,17.0970131 22.2828078,19.0265169 21.0803273,20.5566077 L20.0535231,19.4286002 C20.9629732,18.1875652 21.5,16.6564972 21.5,15 C21.5,10.8578644 18.1421356,7.5 14,7.5 C9.85786438,7.5 6.5,10.8578644 6.5,15 C6.5,16.6564972 7.0370268,18.1875652 7.94647688,19.4286002 L6.91967274,20.5566077 C5.71719218,19.0265169 5,17.0970131 5,15 C5,10.0294373 9.02943725,6 14,6 Z M14,10 C16.7614237,10 19,12.2385763 19,15 C19,15.9195112 18.7517897,16.7810497 18.3187153,17.5212695 L17.2381649,16.3306861 C17.4069266,15.9204527 17.5,15.4710956 17.5,15 C17.5,13.0670034 15.9329966,11.5 14,11.5 C12.0670034,11.5 10.5,13.0670034 10.5,15 C10.5,15.4710956 10.5930734,15.9204527 10.7618351,16.3306861 L9.68128471,17.5212695 C9.2482103,16.7810497 9,15.9195112 9,15 C9,12.2385763 11.2385763,10 14,10 Z</StreamGeometry>
+    <StreamGeometry x:Key="router_regular">M12,8 C13.6569,8 15,9.34315 15,11 C15,12.3371217 14.1252318,13.4699388 12.9168031,13.8573433 L12.75,13.9055 L12.75,16 L18,16 C19.6569,16 21,17.3431 21,19 C21,20.597725 19.7511226,21.903664 18.1762773,21.9949075 L18,22 L6,22 C4.34315,22 3,20.6569 3,19 C3,17.402275 4.24892392,16.096336 5.82372764,16.0050925 L6,16 L11.25,16 L11.25,13.9055 C9.95608,13.5725 9,12.3979 9,11 C9,9.34315 10.3431,8 12,8 Z M18,17.5 L6,17.5 C5.17157,17.5 4.5,18.1716 4.5,19 C4.5,19.8284 5.17157,20.5 6,20.5 L18,20.5 C18.8284,20.5 19.5,19.8284 19.5,19 C19.5,18.1716 18.8284,17.5 18,17.5 Z M12,9.5 C11.1716,9.5 10.5,10.1716 10.5,11 C10.5,11.8284 11.1716,12.5 12,12.5 C12.8284,12.5 13.5,11.8284 13.5,11 C13.5,10.1716 12.8284,9.5 12,9.5 Z M12,2 C16.9706,2 21,6.02944 21,11 L21,11.25 C21,11.6642 20.6642,12 20.25,12 C19.8358,12 19.5,11.6642 19.5,11.25 L19.5,11 C19.5,6.85786 16.1421,3.5 12,3.5 C7.85786,3.5 4.5,6.85786 4.5,11 L4.5,11.25 C4.5,11.6642 4.16421,12 3.75,12 C3.33579,12 3,11.6642 3,11.25 L3,11 C3,6.02944 7.02944,2 12,2 Z M12,5 C15.3137,5 18,7.68629 18,11 L18,11.25 C18,11.6642 17.6642,12 17.25,12 C16.8358,12 16.5,11.6642 16.5,11.25 L16.5,11 C16.5,8.51472 14.4853,6.5 12,6.5 C9.51472,6.5 7.5,8.51472 7.5,11 L7.5,11.25 C7.5,11.6642 7.16421,12 6.75,12 C6.33579,12 6,11.6642 6,11.25 L6,11 C6,7.68629 8.68629,5 12,5 Z</StreamGeometry>
+  </UserControl.Resources>
+  <!--Grid ColumnDefinitions="250,*">
+        <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+            <StackPanel Orientation="Vertical">
+                <StackPanel.Styles>
+                    <Style Selector="Button">
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Height" Value="40" />
+                    </Style>
+                </StackPanel.Styles>
+                <Button Content="Show" Command="{Binding Show}" />
+                <Button Content="Activate" Command="{Binding Activate}" />
+                <Button Content="Close" Command="{Binding Close}" />
+                <Button Content="Show Dialog" Command="{Binding ShowDialog}" />
+                <Button Content="Dialog Confirm Close" Command="{Binding DialogConfirmClose}" />
+                <Button Content="Open File" Command="{Binding OpenFile}" />
+                <Button Content="Open Files" Command="{Binding OpenFiles}" />
+                <Button Content="Open Folder" Command="{Binding OpenFolder}" />
+                <Button Content="Open Folders" Command="{Binding OpenFolders}" />
+                <Button Content="Save File" Command="{Binding SaveFile}" />
+                <Button Content="MessageBox" Command="{Binding MessageBox}" />
+                <Button Content="3 Message Boxes" Command="{Binding MessageBoxMultiple}" />
+            </StackPanel>
+        </ScrollViewer>
+        <TextBlock Grid.Column="1" Text="{Binding Output}" />
+    </Grid-->
+  <!--Button Content="Dialog Confirm Close" Command="{Binding DialogConfirmClose}" /-->
+  <DockPanel>
+    <Border Background="{DynamicResource SystemAccentColor}" DockPanel.Dock="Top">
+      <DockPanel LastChildFill="False">
+        <TextBlock Margin="16" Text="AgConn" Foreground="White"/>
+        <OnPlatform>
+          <OnPlatform.Default>
+            <Button Name="btnExit" Height="58" Width="63" Background="{DynamicResource SystemAccentColor}" Command="{Binding Quit}" DockPanel.Dock="Right" IsCancel="True">
+              <Image Source="avares://AgConn.CrossPlatform/Assets/Close.png"/>
+            </Button>
+          </OnPlatform.Default>
+          <OnPlatform.Android>
+            <Button IsVisible="false"/>
+          </OnPlatform.Android>
+        </OnPlatform>
+        <Button Name="statusStrip1" Height="58" Width="63" DockPanel.Dock="Right" Background="{DynamicResource SystemAccentColor}">
+          <Image Source="avares://AgConn.CrossPlatform/Assets/Settings.png"/>
+          <Button.Flyout>
+            <MenuFlyout Placement="Bottom">
+              <MenuItem Header="Save" FontSize="20" Name="toolStripMenuItem1" Command="{Binding toolStripMenuItem1}">
+                <MenuItem.Icon>
+                  <!--Image Width="20" Height="20" Source="avares://AgConn.CrossPlatform/Assets/VehFileSave.png"/-->
+                  <PathIcon Data="{StaticResource save_as_regular}"/>
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="Load" Name="toolStripMenuItem2" FontSize="20" Command="{Binding toolStripMenuItem2}">
+                <MenuItem.Icon>
+                  <!--Image Width="20" Height="20" Stretch="UniformToFill" Source="avares://AgConn.CrossPlatform/Assets/VehFileLoad.png"/-->
+                  <PathIcon Data="{StaticResource upload_regular}"/>
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="GPS Data" Name="toolStripMenuItem4" FontSize="20" Command="{Binding toolStripMenuItem4}">
+                <MenuItem.Icon>
+                  <!--Image Width="20" Height="20" Stretch="UniformToFill" Source="avares://AgConn.CrossPlatform/Assets/Satellite.png"/-->
+                  <PathIcon Data="{StaticResource location_regular}"/>
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="Device Manager" Name="deviceManagerToolStripMenuItem" FontSize="20" Command="{Binding deviceManagerToolStripMenuItem}">
+                <MenuItem.Icon>
+                  <!--Image Width="20" Height="20" Stretch="UniformToFill" Source="avares://AgConn.CrossPlatform/Assets/DeviceManager.png"/-->
+                  <PathIcon Data="{StaticResource usb_port_regular}"/>
+                </MenuItem.Icon>
+              </MenuItem>
+            </MenuFlyout>
+          </Button.Flyout>
+        </Button>
+        <Button Name="settingsMenuStrip" Height="58" Width="70" Background="{DynamicResource SystemAccentColor}" Foreground="White" DockPanel.Dock="Right" Content="NTRIP" FontWeight="Bold">
+          <!--Image Source="avares://AgConn.CrossPlatform/Assets/NtripSettings.png" /-->
+          <Button.Flyout>
+            <MenuFlyout Placement="Bottom">
+              <MenuItem Header="Client NTRIP" Name="saveToolStrip" FontSize="20" Command="{Binding DialogNtrip}" Foreground="Black">
+                <MenuItem.Icon>
+                  <!--Image Width="20" Height="20" Stretch="UniformToFill" Source="avares://AgConn.CrossPlatform/Assets/NTRIP_Client.png"/-->
+                  <PathIcon Data="{StaticResource router_regular}"/>
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="Radio NTRIP" Name="loadToolStrip" FontSize="20" Command="{Binding Radio}" Foreground="Black">
+                <MenuItem.Icon>
+                  <!--Image Width="20" Height="20" Stretch="UniformToFill" Source="avares://AgConn.CrossPlatform/Assets/RadioSettings.png"/-->
+                  <PathIcon Data="{StaticResource sound_source_regular}"/>
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="Serial NTRIP" Name="serialPassThroughToolStripMenuItem" FontSize="20" Command="{Binding serialPassThroughToolStripMenuItem}" Foreground="Black">
+                <MenuItem.Icon>
+                  <!--Image Width="20" Height="20" Stretch="UniformToFill" Source="avares://AgConn.CrossPlatform/Assets/NTRIP_Serial.png"/-->
+                  <PathIcon Data="{StaticResource serial_port_regular}"/>
+                </MenuItem.Icon>
+              </MenuItem>
+            </MenuFlyout>
+          </Button.Flyout>
+        </Button>
+      </DockPanel>
+    </Border>
+    <UniformGrid Rows="4">
+      <Border Background="White" BorderBrush="{DynamicResource SystemAccentColor}" BorderThickness="2" CornerRadius="3" Margin="5">
+        <StackPanel Margin="10" Spacing="10">
+          <WrapPanel>
+            <TextBlock Name="label6" FontSize="11" FontFamily="Microsoft Sans Serif" FontWeight="Bold">Lat</TextBlock>
+            <TextBlock Name="lblCurrentLat" Text="{Binding CurrentLat, Mode=TwoWay}" Margin="5 0" FontSize="11" FontFamily="Microsoft Sans Serif">-53.1234567</TextBlock>
+          </WrapPanel>
+          <WrapPanel>
+            <TextBlock Name="label8" FontSize="11" FontFamily="Microsoft Sans Serif" FontWeight="Bold">Lon</TextBlock>
+            <TextBlock Name="lblCurentLon" Text="{Binding CurentLon, Mode=TwoWay}" Margin="5 0" FontSize="11" FontFamily="Microsoft Sans Serif">-888.8888888</TextBlock>
+          </WrapPanel>
+        </StackPanel>
+      </Border>
+      <Button Classes="accent" Name="btnUDP" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding DialogConfirmClose}">
+        <Panel>
+          <Image Source="avares://AgConn.CrossPlatform/Assets/B_UDP.png" Height="128" Width="128" HorizontalAlignment="Center" Stretch="None"/>
+          <TextBlock Text="UDP settings" Width="100" FontWeight="Bold" HorizontalAlignment="Right"/>
+          <TextBlock Text="---" VerticalAlignment="Bottom"/>
+          <TextBlock Text="---" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        </Panel>
+      </Button>
+      <Button Classes="accent" Name="btnIMU" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding CommSettings}">
+        <DockPanel>
+          <WrapPanel DockPanel.Dock="Top">
+            <Image Source="avares://AgConn.CrossPlatform/Assets/B_IMU.png" Height="128" Width="128" Stretch="None"/>
+            <TextBlock Text="IMU" Width="100" FontWeight="Bold"/>
+          </WrapPanel>
+        </DockPanel>
+      </Button>
+      <Button Classes="accent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding CommSettings}">
+        <DockPanel>
+          <WrapPanel DockPanel.Dock="Top">
+            <Image Source="avares://AgConn.CrossPlatform/Assets/steer.png" Height="128" Width="128" Stretch="None"/>
+            <TextBlock Text="Steer" Width="100" FontWeight="Bold"/>
+          </WrapPanel>
+        </DockPanel>
+      </Button>
+      <Button Classes="accent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding CommSettings}">
+        <DockPanel>
+          <WrapPanel DockPanel.Dock="Top">
+            <Image Source="avares://AgConn.CrossPlatform/Assets/B_GPS.png" Height="128" Width="128" Stretch="None"/>
+            <TextBlock Text="GPS" Width="100" FontWeight="Bold"/>
+          </WrapPanel>
+        </DockPanel>
+      </Button>
+      <Button Classes="accent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding CommSettings}">
+        <DockPanel>
+          <WrapPanel>
+            <Image Source="avares://AgConn.CrossPlatform/Assets/B_Machine.png" DockPanel.Dock="Top" Height="128" Width="128" Stretch="None"/>
+            <TextBlock Text="Machine" Width="100" FontWeight="Bold"/>
+          </WrapPanel>
+        </DockPanel>
+      </Button>
+      <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding TextOutput}"/>
+    </UniformGrid>
+  </DockPanel>
+  <!--StackPanel Grid.Column="0" Grid.Row="0" Spacing ="20">
+      <TextBlock Name="label6"  FontSize="11" FontFamily="Microsoft Sans Serif" FontWeight="Bold" >Lat</TextBlock>
+      <TextBlock Name="lblCurrentLat" Text="{Binding CurrentLat, Mode=TwoWay}" FontSize="11" FontFamily="Microsoft Sans Serif" >-53.1234567</TextBlock>
+      <TextBlock Name="label8" FontSize="11" FontFamily="Microsoft Sans Serif" FontWeight="Bold" >Lon</TextBlock>
+      <TextBlock Name="lblCurentLon" Text="{Binding CurentLon, Mode=TwoWay}" FontSize="11" FontFamily="Microsoft Sans Serif" >-888.8888888</TextBlock>
+      <WrapPanel>
+        <TextBlock Name="label7" TabIndex="0" FontSize="11" FontFamily="Microsoft Sans Serif" FontWeight="Bold" >Min</TextBlock>
+        <TextBlock Name="lblSkipCounter" Text="{Binding SkipCounter, Mode=TwoWay}" Margin="10 0" FontSize="11" FontFamily="Microsoft Sans Serif" >285</TextBlock>
+      </WrapPanel>
+      <Button Name="btnUDP" Height="60" Width="82" Foreground="Black" Background="hsl(265.13,100.00%,45.88%)" Command="{Binding DialogConfirmClose}">
+          <Image Source="avares://AgConn.CrossPlatform/Assets/B_UDP.png"/>
+      </Button>
+      <TextBlock Name="label1" FontSize="11" FontFamily="Microsoft Sans Serif" FontWeight="Bold" >Com Ports:</TextBlock>
+      <TextBox Name="lblSerialPorts" IsReadOnly="True" FontSize="11" FontFamily="Microsoft Sans Serif" >Com12</TextBox>
+      <Button Name="lblIP" Content="{Binding IP, Mode=TwoWay}" Height="27" Width="114" FontSize="11" FontFamily="Microsoft Sans Serif"  Command="{Binding IPCommand}">255.255.255.0</Button>
+      
+    </StackPanel>
+    <StackPanel Grid.Column="1" Spacing="20" Grid.Row="0" >
+		<Button Name="btnStartStopNtrip" Height="27" Width="80" Foreground="White" FontSize="11" FontWeight="Bold" Command="{Binding StartStopNtrip}" Content="StartStop">
+		 </Button>
+		
+		<TextBlock Name="lblWatch" FontSize="11" FontFamily="Microsoft Sans Serif" >Watch</TextBlock>
+		
+		<Button Name="lblNTRIPBytes" Height="27" Width="114" FontSize="11" FontFamily="Microsoft Sans Serif"  Command="{Binding NTRIPBytes}">999,999,999</Button>
+		
+    </StackPanel>
+    <StackPanel Grid.Column="2" Grid.Row="0" Spacing="20">
+     
+      <Button Name="pictureBox2" Command="{Binding pictureBox2}">
+        <Image Source="avares://AgConn.CrossPlatform/Assets/InOut.png"/>
+      </Button>  
+      <Panel>
+          <TextBlock Name="lblIMUComm" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Left" Text="  "/>
+		  <Button Name="btnIMU" Height="59" Width="84" Background="hsl(265.13,100.00%,45.88%)" HorizontalAlignment="Center" Command="{Binding CommSettings}">
+		    <Image Source="avares://AgConn.CrossPlatform/Assets/B_IMU.png"/>
+		  </Button>
+		 <TextBlock Name="lblFromMU" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Right" VerticalAlignment="Center" Text="   "/>
+      </Panel>
+      <Panel>
+          <TextBlock Name="lblMod1Comm" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Left" Text="  "/>
+		  <Button Name="btnSteer" Height="59" Width="84" Background="hsl(265.13,100.00%,45.88%)"  HorizontalAlignment="Center" Command="{Binding CommSettings}">
+		    <Image Source="avares://AgConn.CrossPlatform/Assets/steer.png"/>
+		  </Button>
+		  <TextBlock Name="lblFromSteer" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Right" VerticalAlignment="Top" Text="  "/>
+		  <TextBlock Name="lblToSteer" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="    "/>
+      </Panel>		  
+      <Panel>
+       <TextBlock Name="lblGPS1Comm" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Left" Text="  "/>
+		 <Button Name="btnGPS" Height="59" Width="84"  Background="hsl(265.13,100.00%,45.88%)" HorizontalAlignment="Center"  Command="{Binding CommSettings}" >
+		   <Image Name="btnGPS_Image" Source="avares://AgConn.CrossPlatform/Assets/B_GPS.png"/>
+		 </Button>
+		  <TextBlock Name="lblFromGPS" FontSize="11" FontFamily="Microsoft Sans Serif"  Text="   " HorizontalAlignment="Right" VerticalAlignment="Top"/>
+		 <TextBlock Name="lblToGPS" FontSize="11" FontFamily="Microsoft Sans Serif"  Text="  " HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+	   </Panel>
+       <Panel>
+           <TextBlock Name="lblMod2Comm" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Left" Text="  "/>
+		  <Button Name="btnMachine" Height="59" Width="84" Background="hsl(265.13,100.00%,45.88%)" HorizontalAlignment="Center" Command="{Binding CommSettings}">
+		    <Image Source="avares://AgConn.CrossPlatform/Assets/B_Machine.png"/>
+		  </Button>
+		  <TextBlock Name="lblFromMachine" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="  "/>
+		  <TextBlock Name="lblToMachine" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Right" VerticalAlignment="Top" Text="  "/>
+	  </Panel>
+    </StackPanel>  
+    <StackPanel Grid.Column="3" Spacing="20" Grid.Row="0">
+        <Button Name="btnSlide" Height="43" Width="55" Command="{Binding Slide}">
+          <Image Name="btnSlide_Image" Source="avares://AgConn.CrossPlatform/Assets/ArrowGrnRight.png"/>
+        </Button>
+    </StackPanel>
+    <StackPanel Grid.Column="4" Grid.Row="0">
+       <ToggleSwitch Name="cboxIsIMUModule"  Margin="0 50"  Command="{Binding cboxIsIMUModule}" IsChecked="True"/>
+       <ToggleSwitch Name="cboxIsSteerModule" Margin="0 50"  Command="{Binding cboxIsSteerModule}" IsChecked="True"/>
+       <ToggleSwitch Name="cboxIsMachineModule" Margin="0 20"  Command="{Binding cboxIsMachineModule}"  IsChecked="True"/>	
+    </StackPanel>
+    <StackPanel Grid.Column="5" Spacing="5" Margin="10"  Grid.Row="0">
+   
+     <TextBlock Name="lblMount" FontSize="11" FontFamily="Microsoft Sans Serif"  Text="  "/>
+     <TextBlock Name="lblNTRIP_IP" FontSize="11" FontFamily="Microsoft Sans Serif"  Text="  "/>
+    	 
+     <TextBlock Name="lblWorkSwitchStatus" FontSize="11" FontFamily="Microsoft Sans Serif" >*</TextBlock>
+     <TextBlock Name="label9" FontSize="11" FontFamily="Microsoft Sans Serif" >Work:</TextBlock>
+     <TextBlock Name="lblSwitchStatus" FontSize="11" FontFamily="Microsoft Sans Serif" >*</TextBlock>
+     <TextBlock Name="label2" FontSize="11" FontFamily="Microsoft Sans Serif" >Switch:</TextBlock>
+     <TextBlock Name="lblWASCounts" FontSize="11" FontFamily="Microsoft Sans Serif" >Only</TextBlock>
+     <TextBlock Name="lblSteerAngle" FontSize="11" FontFamily="Microsoft Sans Serif" >UDP</TextBlock>
+     <TextBlock Name="label4" FontSize="11" FontFamily="Microsoft Sans Serif" >Counts:</TextBlock>
+     <TextBlock Name="label3" FontSize="11" FontFamily="Microsoft Sans Serif" >Angle:</TextBlock>
+   
+     <TextBlock Name="label10" FontSize="11" FontFamily="Microsoft Sans Serif" >8  &lt;&lt;  1</TextBlock> 
+     <TextBlock Name="lbl1To8" FontSize="11" FontFamily="Microsoft Sans Serif" >00000000</TextBlock>
+     <TextBlock Name="label12" FontSize="11" FontFamily="Microsoft Sans Serif" >16 &lt;&lt;  9</TextBlock>
+     <TextBlock Name="lbl9To16" FontSize="11" FontFamily="Microsoft Sans Serif" >00000000</TextBlock>
+     <Button Name="btnRelayTest" Height="73" Width="61"   Command="{Binding RelayTest}" Content="Test">
+      <Image Source="avares://AgConn.CrossPlatform/Assets/TestRelays.png"/>
+    </Button>
+    </StackPanel>
+    <StackPanel Grid.Column="6" Spacing="5" Margin="10" Grid.Row="0">
+     <WrapPanel>
+      <TextBlock Name="label13" FontSize="11" FontFamily="Microsoft Sans Serif" >ID:</TextBlock>
+      <TextBlock Name="lblStationID" FontSize="11" FontFamily="Microsoft Sans Serif" >0</TextBlock>
+     </WrapPanel> 
+     <WrapPanel>
+      <TextBlock Name="label11" FontSize="11" FontFamily="Microsoft Sans Serif" >L:</TextBlock>
+      <TextBlock Name="lblPacketSize" FontSize="11" FontFamily="Microsoft Sans Serif" >0</TextBlock>
+     </WrapPanel>
+      <WrapPanel>
+      <TextBlock Name="label5" FontSize="11" FontFamily="Microsoft Sans Serif" >Found:</TextBlock>
+      <TextBlock Name="lblCount" FontSize="11" FontFamily="Microsoft Sans Serif" >-</TextBlock>
+     </WrapPanel>
+      <Button Name="lblMessages" Height="335" Width="87" FontSize="11" FontFamily="Microsoft Sans Serif"  Command="{Binding lblMessages}">1888 - 18</Button>
+      <TextBlock Name="lblMessagesFound" FontSize="11" FontFamily="Microsoft Sans Serif" >0</TextBlock>
+     
+    </StackPanel>
+    <StackPanel Orientation="Horizontal" Grid.Row="1" >
+    <Button Name="btnExit" Height="58" Width="63"  Command="{Binding Exit}">
+      <Image Source="avares://AgConn.CrossPlatform/Assets/SwitchOff.png"/>
+    </Button>
+    <Button Name="statusStrip1" Height="58" Width="63" Margin="40 0" VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
+        <Image Source="avares://AgConn.CrossPlatform/Assets/Settings48.png" />
+        <Button.Flyout>
+            <MenuFlyout Placement="Right">
+                <MenuItem Header="Save" FontSize="20" Name="toolStripMenuItem1" Command="{Binding toolStripMenuItem1}">
+                   <MenuItem.Icon>
+                     <Image Width="20" Height="20" Source="avares://AgConn.CrossPlatform/Assets/VehFileSave.png"/>
+                   </MenuItem.Icon>  
+                 </MenuItem>   
+                <MenuItem Header="Load" Name="toolStripMenuItem2" FontSize="20" Command="{Binding toolStripMenuItem2}">
+                    <MenuItem.Icon>
+                     <Image Width="20" Height="20" Stretch="UniformToFill" Source="avares://AgConn.CrossPlatform/Assets/VehFileLoad.png"/>
+                   </MenuItem.Icon>  
+                 </MenuItem>   
+                <MenuItem Header="GPS Data" Name="toolStripMenuItem4" FontSize="20" Command="{Binding toolStripMenuItem4}" >
+                    <MenuItem.Icon>
+                     <Image Width="20" Height="20" Stretch="UniformToFill" Source="avares://AgConn.CrossPlatform/Assets/Satellite.png"/>
+                   </MenuItem.Icon>  
+                 </MenuItem>   
+                <MenuItem Header="Device Manager" Name="deviceManagerToolStripMenuItem" FontSize="20" Command="{Binding deviceManagerToolStripMenuItem}" >
+                    <MenuItem.Icon>
+                     <Image Width="20" Height="20" Stretch="UniformToFill" Source="avares://AgConn.CrossPlatform/Assets/DeviceManager.png"/>
+                   </MenuItem.Icon>  
+                </MenuItem>   
+            </MenuFlyout>
+        </Button.Flyout>
+    </Button>
+     <Button Name="settingsMenuStrip" Height="58" Width="63" Margin="40 0" VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
+        <Image Source="avares://AgConn.CrossPlatform/Assets/NtripSettings.png" />
+        <Button.Flyout>
+            <MenuFlyout Placement="Right">
+                <MenuItem Header="Client NTRIP" Name="saveToolStrip"  FontSize="20" Command="{Binding NTRIP}">
+                   <MenuItem.Icon>
+                     <Image Width="20" Height="20" Stretch="UniformToFill" Source="avares://AgConn.CrossPlatform/Assets/NTRIP_Client.png"/>
+                   </MenuItem.Icon>  
+                </MenuItem>   
+                <MenuItem Header="Radio NTRIP" Name="loadToolStrip"  FontSize="20" Command="{Binding Radio}">
+                   <MenuItem.Icon>
+                     <Image Width="20" Height="20" Stretch="UniformToFill" Source="avares://AgConn.CrossPlatform/Assets/RadioSettings.png"/>
+                   </MenuItem.Icon>  
+                </MenuItem>   
+                <MenuItem Header="Serial NTRIP" Name="serialPassThroughToolStripMenuItem"  FontSize="20" Command="{Binding serialPassThroughToolStripMenuItem}" >
+                   <MenuItem.Icon>
+                     <Image Width="20" Height="20" Stretch="UniformToFill" Source="avares://AgConn.CrossPlatform/Assets/NTRIP_Serial.png"/>
+                   </MenuItem.Icon>  
+                </MenuItem>   
+            </MenuFlyout>
+        </Button.Flyout>
+    </Button>
+    <Button Name="btnRunAOG" Height="58" Width="63"  Margin="30 0"  Command="{Binding RunAOG}" >
+      <Image Source="avares://AgConn.CrossPlatform/Assets/AgIOBtn.png"/>
+    </Button>
+     <Button Name="btnResetTimer" Height="58" Width="63"  Margin="20 0"  Command="{Binding ResetTimer}" Content="179">
+        <Image Source="avares://AgConn.CrossPlatform/Assets/ResetTimer.png"/>
+      </Button>
+      <ToggleButton Name="cboxLogNMEA" Height="58" Width="63"  Margin="20 0"  IsChecked="{Binding cboxLogNMEA_CheckedChanged}">
+            <Image Source="avares://AgConn.CrossPlatform/Assets/LogNMEA.png"/>
+      </ToggleButton>      
+       <Button Name="btnWindowsShutDown" Height="58" Width="63" Margin="20 0"  Command="{Binding WindowsShutDown}">
+        <Image Source="avares://AgConn.CrossPlatform/Assets/WindowsShutDown.png"/>
+      </Button-->
+</UserControl>
