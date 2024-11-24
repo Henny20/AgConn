@@ -13,6 +13,9 @@
                      <UserControl.Styles>
       <StyleInclude Source="/Styles/GroupBox.axaml" />
   </UserControl.Styles>
+     <!--UserControl.Background>
+    <ImageBrush Source="avares://AgConn.CrossPlatform/Assets/Com_AutosteerModule.png" />
+</UserControl.Background-->
   <DockPanel>
   <Border Background="{DynamicResource SystemAccentColor}" DockPanel.Dock="Top">
         <TextBlock
@@ -24,11 +27,11 @@
   <DockPanel LastChildFill="False">
       <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Spacing="5" Margin="5">
       <StackPanel>
-         <TextBlock x:Name="lblCurrentPort2" HorizontalAlignment="Center" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="47" >Port</TextBlock>
+         <TextBlock x:Name="lblCurrentPort2" HorizontalAlignment="Center" FontSize="11"  TabIndex="47" >Port</TextBlock>
         <ComboBox x:Name="cboxPort" Width="135" ItemsSource="{Binding Ports}" TabIndex="50" /> <!--SelectionChanged="cboxPort_SelectedIndexChanged_1"/-->
         </StackPanel>
         <StackPanel>
-         <TextBlock x:Name="lblCurrentBaud2" HorizontalAlignment="Center" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="46" >Baud</TextBlock>
+         <TextBlock x:Name="lblCurrentBaud2" HorizontalAlignment="Center" FontSize="11"  TabIndex="46" >Baud</TextBlock>
         <ComboBox x:Name="cboxBaud" SelectedIndex="0" Width="100" ItemsSource="{Binding BaudRates}" TabIndex="49"/> <!--SelectionChanged="cboxBaud_SelectedIndexChanged_1"-->
         </StackPanel>
         <!--Button x:Name="btnCloseSerial" Height="58" Width="56" TabIndex="44" Background="Transparent" Command="{Binding CloseSerialCommand}" >
@@ -39,7 +42,7 @@
             <Image Source="avares://AgConn.CrossPlatform/Assets/USB_Connect.png" Height="40" Width="40"/>
          </Button-->   
         <ToggleSwitch  IsChecked="{Binding SerialState , Mode=TwoWay}"/>
-    <!--TextBlock x:Name="lblGPS" Height="32" Width="57" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="79">GPS</TextBlock-->
+    <!--TextBlock x:Name="lblGPS" Height="32" Width="57" FontSize="11"  TabIndex="79">GPS</TextBlock-->
         <!--ComboBox x:Name="cboxPort2"  IsVisible="false" Height="37" Width="169" TabIndex="50" /--> <!--SelectionChanged="cboxPort2_SelectedIndexChanged"/-->
         <!--ComboBox x:Name="cboxBaud2" IsVisible="false" SelectedIndex="0" Height="37" Width="127" TabIndex="49" /--> <!--SelectionChanged="cboxBaud2_SelectedIndexChanged"-->
           <!--ComboBoxItem>4800</ComboBoxItem>
@@ -50,17 +53,17 @@
           <ComboBoxItem>115200</ComboBoxItem>
         </ComboBox-->
         </StackPanel>
-        <!--TextBlock x:Name="labelDifferentRtcmPort" Margin="10 5" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="94" >Different Port Then GPS ?</TextBlock-->
+        <!--TextBlock x:Name="labelDifferentRtcmPort" Margin="10 5" FontSize="11"  TabIndex="94" >Different Port Then GPS ?</TextBlock-->
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top"  Spacing="5" Margin="5">
        <StackPanel>
-         <TextBlock x:Name="labelRtcmPort"  FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="52" >RTCM Port</TextBlock>
+         <TextBlock x:Name="labelRtcmPort"  FontSize="11"  TabIndex="52" >RTCM Port</TextBlock>
         <ComboBox x:Name="cboxRtcmPort"  TabIndex="54" /> <!--SelectionChanged="cboxRtcmPort_SelectedIndexChanged"/-->
         
        </StackPanel>
        
         
         <StackPanel>
-         <TextBlock x:Name="labelRtcmBaud"  FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="51" >RTCM Baud</TextBlock>
+         <TextBlock x:Name="labelRtcmBaud"  FontSize="11"  TabIndex="51" >RTCM Baud</TextBlock>
          <ComboBox x:Name="cboxRtcmBaud" SelectedIndex="0" Width="100" ItemsSource="{Binding RTCMBaudRates}" TabIndex="53" > <!--SelectionChanged="cboxRtcmBaud_SelectedIndexChanged"-->
           <!--ComboBoxItem>4800</ComboBoxItem>
           <ComboBoxItem>9600</ComboBoxItem>
@@ -84,7 +87,7 @@
   <TextBox x:Name="textBoxRcv" TabIndex="40" IsReadOnly="True" TextWrapping="Wrap" DockPanel.Dock="Bottom"/>
          
         
-         <!--TextBlock x:Name="label3" Height="38" Width="91" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="97" >RTCM</TextBlock-->
+         <!--TextBlock x:Name="label3" Height="38" Width="91" FontSize="11"  TabIndex="97" >RTCM</TextBlock-->
          
        
         
@@ -97,16 +100,16 @@
           <ComboBoxItem>38400</ComboBoxItem>
           <ComboBoxItem>57600</ComboBoxItem>
           <ComboBoxItem>115200</ComboBoxItem-->
-        <!--TextBlock x:Name="lblCurrentPort" Height="27" Width="130" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="47" >GPS Port</TextBlock>
-        <TextBlock x:Name="label2" Height="38" Width="71" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="74" >GPS</TextBlock>
-        <TextBlock x:Name="lblCurrentBaud" Height="27" Width="133" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="46">GPS Baud</TextBlock-->
+        <!--TextBlock x:Name="lblCurrentPort" Height="27" Width="130" FontSize="11"  TabIndex="47" >GPS Port</TextBlock>
+        <TextBlock x:Name="label2" Height="38" Width="71" FontSize="11"  TabIndex="74" >GPS</TextBlock>
+        <TextBlock x:Name="lblCurrentBaud" Height="27" Width="133" FontSize="11"  TabIndex="46">GPS Baud</TextBlock-->
         
           </DockPanel>
     </HeaderedContentControl>
     <HeaderedContentControl Header="IMU" Background="#00B294" Grid.Row="1" Margin="10">
     <StackPanel Orientation="Horizontal" Spacing="5" Margin="10">
        <StackPanel>
-        <TextBlock x:Name="lblCurrentIMU" Width="121" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="51">Port</TextBlock>
+        <TextBlock x:Name="lblCurrentIMU" Width="121" FontSize="11"  TabIndex="51">Port</TextBlock>
         <ComboBox x:Name="cboxIMU" Width="124" TabIndex="50"/>
         <!--SelectionChanged="cboxIMU_SelectedIndexChanged" /-->
         </StackPanel>
@@ -123,7 +126,7 @@
      <HeaderedContentControl Header="Machine" Background="#00B294" Grid.Row="2" Margin="10">
     <StackPanel Orientation="Horizontal" Spacing="5" Margin="10">
        <StackPanel>
-       <TextBlock x:Name="lblCurrentMachineModulePort"  Width="121" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="70" >Port</TextBlock>
+       <TextBlock x:Name="lblCurrentMachineModulePort"  Width="121" FontSize="11"  TabIndex="70" >Port</TextBlock>
         <ComboBox x:Name="cboxMachineModulePort" Width="124" TabIndex="64" /> <!-- SelectionChanged="cboxMachineModulePort_SelectedIndexChanged" /-->
         </StackPanel>
         <!--Button x:Name="btnOpenSerialMachineModule" Height="58" Width="101" TabIndex="53" Background="Transparent" Command="{Binding OpenSerialMachineModuleCommand}" >
@@ -137,7 +140,7 @@
      </HeaderedContentControl>
     <!--StackPanel Name="Module3" Grid.Row="3">
     
-        <TextBlock x:Name="lblCurrentModule3Port" Height="27" Width="49" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="71" >Port</TextBlock>
+        <TextBlock x:Name="lblCurrentModule3Port" Height="27" Width="49" FontSize="11"  TabIndex="71" >Port</TextBlock>
         <ComboBox x:Name="cboxModule3Port" IsVisible="false" Height="37" Width="124" TabIndex="64" /> <!SelectionChanged="cboxModule3Port_SelectedIndexChanged"/>
         <Button x:Name="btnOpenSerialModule3" IsVisible="false" Height="58" Width="101" TabIndex="53" Background="Transparent" Command="{Binding OpenSerialModule3Command}" >
         </Button>      
@@ -148,7 +151,7 @@
     <HeaderedContentControl Header="Steer" Background="{DynamicResource SystemAccentColor}" Grid.Row="3" Margin="10">
     <StackPanel Orientation="Horizontal" Spacing="5" Margin="10">
        <StackPanel>
-          <TextBlock x:Name="lblCurrentSteerModulePort"  Width="121" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="69" >Port</TextBlock>
+          <TextBlock x:Name="lblCurrentSteerModulePort"  Width="121" FontSize="11"  TabIndex="69" >Port</TextBlock>
         <ComboBox x:Name="cboxSteerModulePort" Width="124" TabIndex="64" /> <!--SelectionChanged="cboxSteerModule_SelectedIndexChanged"/-->
        </StackPanel>
         <!--Button x:Name="btnOpenSerialSteerModule" Height="58" Width="101" TabIndex="53" Background="Transparent" Command="{Binding OpenSerialSteerModuleCommand}" >

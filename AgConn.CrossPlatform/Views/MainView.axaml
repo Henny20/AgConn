@@ -45,7 +45,7 @@
   <DockPanel>
     <Border Background="{DynamicResource SystemAccentColor}" DockPanel.Dock="Top">
       <DockPanel LastChildFill="False">
-        <TextBlock Margin="16" Text="AgConn" Foreground="White"/>
+        <TextBlock Margin="16" Text="AgConn" FontSize="16" Foreground="White"/>
         <OnPlatform>
           <OnPlatform.Default>
             <Button Name="btnExit" Height="58" Width="63" Background="{DynamicResource SystemAccentColor}" Command="{Binding Quit}" DockPanel.Dock="Right" IsCancel="True">
@@ -112,22 +112,32 @@
             </MenuFlyout>
           </Button.Flyout>
         </Button>
+         <ToggleButton Name="cboxLogNMEA" Height="58" Width="63"  Margin="20 0"  IsChecked="{Binding cboxLogNMEA_CheckedChanged}"  Background="{DynamicResource SystemAccentColor}" Foreground="White" DockPanel.Dock="Right" FontWeight="Bold">
+            <Image Source="avares://AgConn.CrossPlatform/Assets/logging.png"/>
+      </ToggleButton>      
       </DockPanel>
     </Border>
     <UniformGrid Rows="4">
       <Border Background="White" BorderBrush="{DynamicResource SystemAccentColor}" BorderThickness="2" CornerRadius="3" Margin="5">
         <StackPanel Margin="10" Spacing="10">
           <WrapPanel>
-            <TextBlock Name="label6" FontSize="11" FontFamily="Microsoft Sans Serif" FontWeight="Bold">Lat</TextBlock>
-            <TextBlock Name="lblCurrentLat" Text="{Binding CurrentLat, Mode=TwoWay}" Margin="5 0" FontSize="11" FontFamily="Microsoft Sans Serif">-53.1234567</TextBlock>
+            <TextBlock Name="label6" FontSize="11"  FontWeight="Bold">Lat</TextBlock>
+            <TextBlock Name="lblCurrentLat" Text="{Binding CurrentLat, Mode=TwoWay}" Margin="5 0" FontSize="11" >-53.1234567</TextBlock>
           </WrapPanel>
           <WrapPanel>
-            <TextBlock Name="label8" FontSize="11" FontFamily="Microsoft Sans Serif" FontWeight="Bold">Lon</TextBlock>
-            <TextBlock Name="lblCurentLon" Text="{Binding CurentLon, Mode=TwoWay}" Margin="5 0" FontSize="11" FontFamily="Microsoft Sans Serif">-888.8888888</TextBlock>
+            <TextBlock Name="label8" FontSize="11"  FontWeight="Bold">Lon</TextBlock>
+            <TextBlock Name="lblCurentLon" Text="{Binding CurentLon, Mode=TwoWay}" Margin="5 0" FontSize="11" >-888.8888888</TextBlock>
           </WrapPanel>
+          <WrapPanel>
+            <TextBlock Name="label7" TabIndex="0" FontSize="11"  FontWeight="Bold" >Min</TextBlock>
+            <TextBlock Name="lblSkipCounter" Text="{Binding SkipCounter}" Margin="10 0" FontSize="11"  >285</TextBlock>
+          </WrapPanel>
+           <TextBlock Name="label1" FontSize="11"  FontWeight="Bold" >Com Ports:</TextBlock>
+      <TextBox Name="lblSerialPorts" IsReadOnly="True" FontSize="11" Text="{Binding SerialPorts}" >Com12</TextBox>
+      <Button Name="lblIP" Content="{Binding IP, Mode=TwoWay}" Height="27" Width="114" FontSize="11"   Command="{Binding IPCommand}">255.255.255.0</Button>
         </StackPanel>
       </Border>
-      <Button Classes="accent" Name="btnUDP" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding DialogConfirmClose}">
+      <Button Classes="accent" Name="btnUDP" IsVisible="{Binding IsLoading}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding DialogConfirmClose}">
         <Panel>
           <Image Source="avares://AgConn.CrossPlatform/Assets/B_UDP.png" Height="128" Width="128" HorizontalAlignment="Center" Stretch="None"/>
           <TextBlock Text="UDP settings" Width="100" FontWeight="Bold" HorizontalAlignment="Right"/>
@@ -143,7 +153,7 @@
           </WrapPanel>
         </DockPanel>
       </Button>
-      <Button Classes="accent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding CommSettings}">
+      <Button Classes="accent" Name="btnSteer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding CommSettings}">
         <DockPanel>
           <WrapPanel DockPanel.Dock="Top">
             <Image Source="avares://AgConn.CrossPlatform/Assets/steer.png" Height="128" Width="128" Stretch="None"/>
@@ -151,7 +161,7 @@
           </WrapPanel>
         </DockPanel>
       </Button>
-      <Button Classes="accent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding CommSettings}">
+      <Button Classes="accent" Name="btnGPS" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding CommSettings}">
         <DockPanel>
           <WrapPanel DockPanel.Dock="Top">
             <Image Source="avares://AgConn.CrossPlatform/Assets/B_GPS.png" Height="128" Width="128" Stretch="None"/>
@@ -159,7 +169,7 @@
           </WrapPanel>
         </DockPanel>
       </Button>
-      <Button Classes="accent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding CommSettings}">
+      <Button Classes="accent" Name="btnMachine" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Command="{Binding CommSettings}">
         <DockPanel>
           <WrapPanel>
             <Image Source="avares://AgConn.CrossPlatform/Assets/B_Machine.png" DockPanel.Dock="Top" Height="128" Width="128" Stretch="None"/>
@@ -167,33 +177,59 @@
           </WrapPanel>
         </DockPanel>
       </Button>
-      <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding TextOutput}"/>
+      <!--TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding TextOutput}"/-->
+      <Border Background="White" BorderBrush="{DynamicResource SystemAccentColor}" BorderThickness="2" CornerRadius="3" Margin="5">
+      <StackPanel Margin="10" Spacing="10">
+        <WrapPanel>
+		  <TextBlock Name="label3" FontWeight="Bold" >Angle:</TextBlock>
+		  <TextBlock Name="lblSteerAngle" Text="{Binding SteerAngle}" >UDP</TextBlock>
+        </WrapPanel>
+        <WrapPanel>
+		  <TextBlock Name="label4" FontWeight="Bold" >Counts:</TextBlock>
+		  <TextBlock Name="lblWASCounts" Text="{Binding WASCounts}">Only</TextBlock>
+        </WrapPanel> 
+        <WrapPanel>
+          <TextBlock Name="label2" FontWeight="Bold" >Switch:</TextBlock>
+          <TextBlock Name="lblSwitchStatus"  Text="{Binding SwitchStatus}">*</TextBlock>
+        </WrapPanel>
+        <WrapPanel>
+		  <TextBlock Name="label9" FontWeight="Bold" >Work:</TextBlock>
+		  <TextBlock Name="lblWorkSwitchStatus" Text="{Binding WorkSwitchStatus}">*</TextBlock>
+        </WrapPanel>
+       </StackPanel> 
+      </Border>
+      <Border Background="White" BorderBrush="{DynamicResource SystemAccentColor}" BorderThickness="2" CornerRadius="3" Margin="5">
+        <StackPanel >
+           <TextBlock Name="lblMount" FontSize="11" Margin="10 0" Text="  "/>
+           <TextBlock Name="lblNTRIP_IP" FontSize="11" Margin="10 0" Text="  "/>
+           <TextBlock Name="label10" FontSize="11" Margin="10 0" FontWeight="Bold">8&#160;&#160;&lt;&lt;&#160;&#160;1</TextBlock> 
+           <TextBlock Name="lbl1To8" FontSize="11" Margin="10 0" Text="{Binding OneToEight}">00000000</TextBlock>
+           <TextBlock Name="label12" FontSize="11" Margin="10 0" FontWeight="Bold" >16&#160;&#160;&lt;&lt;&#160;&#160;9</TextBlock>
+           <TextBlock Name="lbl9To16" FontSize="11" Margin="10 0" Text="{Binding NineToSixteen}">00000000</TextBlock>
+           <Button Name="btnRelayTest" Height="50" Width="50"  Command="{Binding RelayTest}" Content="Test">
+              <Image Source="avares://AgConn.CrossPlatform/Assets/TestRelays.png"/>
+          </Button>
+        </StackPanel>
+      </Border>
     </UniformGrid>
   </DockPanel>
-  <!--StackPanel Grid.Column="0" Grid.Row="0" Spacing ="20">
-      <TextBlock Name="label6"  FontSize="11" FontFamily="Microsoft Sans Serif" FontWeight="Bold" >Lat</TextBlock>
-      <TextBlock Name="lblCurrentLat" Text="{Binding CurrentLat, Mode=TwoWay}" FontSize="11" FontFamily="Microsoft Sans Serif" >-53.1234567</TextBlock>
-      <TextBlock Name="label8" FontSize="11" FontFamily="Microsoft Sans Serif" FontWeight="Bold" >Lon</TextBlock>
-      <TextBlock Name="lblCurentLon" Text="{Binding CurentLon, Mode=TwoWay}" FontSize="11" FontFamily="Microsoft Sans Serif" >-888.8888888</TextBlock>
-      <WrapPanel>
-        <TextBlock Name="label7" TabIndex="0" FontSize="11" FontFamily="Microsoft Sans Serif" FontWeight="Bold" >Min</TextBlock>
-        <TextBlock Name="lblSkipCounter" Text="{Binding SkipCounter, Mode=TwoWay}" Margin="10 0" FontSize="11" FontFamily="Microsoft Sans Serif" >285</TextBlock>
-      </WrapPanel>
-      <Button Name="btnUDP" Height="60" Width="82" Foreground="Black" Background="hsl(265.13,100.00%,45.88%)" Command="{Binding DialogConfirmClose}">
+  
+     
+      <!--Button Name="btnUDP" Height="60" Width="82" Foreground="Black" Background="hsl(265.13,100.00%,45.88%)" Command="{Binding DialogConfirmClose}">
           <Image Source="avares://AgConn.CrossPlatform/Assets/B_UDP.png"/>
       </Button>
-      <TextBlock Name="label1" FontSize="11" FontFamily="Microsoft Sans Serif" FontWeight="Bold" >Com Ports:</TextBlock>
-      <TextBox Name="lblSerialPorts" IsReadOnly="True" FontSize="11" FontFamily="Microsoft Sans Serif" >Com12</TextBox>
-      <Button Name="lblIP" Content="{Binding IP, Mode=TwoWay}" Height="27" Width="114" FontSize="11" FontFamily="Microsoft Sans Serif"  Command="{Binding IPCommand}">255.255.255.0</Button>
+      <TextBlock Name="label1" FontSize="11"  FontWeight="Bold" >Com Ports:</TextBlock>
+      <TextBox Name="lblSerialPorts" IsReadOnly="True" FontSize="11"  >Com12</TextBox>
+      <Button Name="lblIP" Content="{Binding IP, Mode=TwoWay}" Height="27" Width="114" FontSize="11"   Command="{Binding IPCommand}">255.255.255.0</Button>
       
     </StackPanel>
     <StackPanel Grid.Column="1" Spacing="20" Grid.Row="0" >
 		<Button Name="btnStartStopNtrip" Height="27" Width="80" Foreground="White" FontSize="11" FontWeight="Bold" Command="{Binding StartStopNtrip}" Content="StartStop">
 		 </Button>
 		
-		<TextBlock Name="lblWatch" FontSize="11" FontFamily="Microsoft Sans Serif" >Watch</TextBlock>
+		<TextBlock Name="lblWatch" FontSize="11"  >Watch</TextBlock>
 		
-		<Button Name="lblNTRIPBytes" Height="27" Width="114" FontSize="11" FontFamily="Microsoft Sans Serif"  Command="{Binding NTRIPBytes}">999,999,999</Button>
+		<Button Name="lblNTRIPBytes" Height="27" Width="114" FontSize="11"   Command="{Binding NTRIPBytes}">999,999,999</Button>
 		
     </StackPanel>
     <StackPanel Grid.Column="2" Grid.Row="0" Spacing="20">
@@ -202,35 +238,35 @@
         <Image Source="avares://AgConn.CrossPlatform/Assets/InOut.png"/>
       </Button>  
       <Panel>
-          <TextBlock Name="lblIMUComm" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Left" Text="  "/>
+          <TextBlock Name="lblIMUComm" FontSize="11"   HorizontalAlignment="Left" Text="  "/>
 		  <Button Name="btnIMU" Height="59" Width="84" Background="hsl(265.13,100.00%,45.88%)" HorizontalAlignment="Center" Command="{Binding CommSettings}">
 		    <Image Source="avares://AgConn.CrossPlatform/Assets/B_IMU.png"/>
 		  </Button>
-		 <TextBlock Name="lblFromMU" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Right" VerticalAlignment="Center" Text="   "/>
+		 <TextBlock Name="lblFromMU" FontSize="11"   HorizontalAlignment="Right" VerticalAlignment="Center" Text="   "/>
       </Panel>
       <Panel>
-          <TextBlock Name="lblMod1Comm" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Left" Text="  "/>
+          <TextBlock Name="lblMod1Comm" FontSize="11"   HorizontalAlignment="Left" Text="  "/>
 		  <Button Name="btnSteer" Height="59" Width="84" Background="hsl(265.13,100.00%,45.88%)"  HorizontalAlignment="Center" Command="{Binding CommSettings}">
 		    <Image Source="avares://AgConn.CrossPlatform/Assets/steer.png"/>
 		  </Button>
-		  <TextBlock Name="lblFromSteer" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Right" VerticalAlignment="Top" Text="  "/>
-		  <TextBlock Name="lblToSteer" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="    "/>
+		  <TextBlock Name="lblFromSteer" FontSize="11"   HorizontalAlignment="Right" VerticalAlignment="Top" Text="  "/>
+		  <TextBlock Name="lblToSteer" FontSize="11"   HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="    "/>
       </Panel>		  
       <Panel>
-       <TextBlock Name="lblGPS1Comm" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Left" Text="  "/>
+       <TextBlock Name="lblGPS1Comm" FontSize="11"   HorizontalAlignment="Left" Text="  "/>
 		 <Button Name="btnGPS" Height="59" Width="84"  Background="hsl(265.13,100.00%,45.88%)" HorizontalAlignment="Center"  Command="{Binding CommSettings}" >
 		   <Image Name="btnGPS_Image" Source="avares://AgConn.CrossPlatform/Assets/B_GPS.png"/>
 		 </Button>
-		  <TextBlock Name="lblFromGPS" FontSize="11" FontFamily="Microsoft Sans Serif"  Text="   " HorizontalAlignment="Right" VerticalAlignment="Top"/>
-		 <TextBlock Name="lblToGPS" FontSize="11" FontFamily="Microsoft Sans Serif"  Text="  " HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+		  <TextBlock Name="lblFromGPS" FontSize="11"   Text="   " HorizontalAlignment="Right" VerticalAlignment="Top"/>
+		 <TextBlock Name="lblToGPS" FontSize="11"   Text="  " HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
 	   </Panel>
        <Panel>
-           <TextBlock Name="lblMod2Comm" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Left" Text="  "/>
+           <TextBlock Name="lblMod2Comm" FontSize="11"   HorizontalAlignment="Left" Text="  "/>
 		  <Button Name="btnMachine" Height="59" Width="84" Background="hsl(265.13,100.00%,45.88%)" HorizontalAlignment="Center" Command="{Binding CommSettings}">
 		    <Image Source="avares://AgConn.CrossPlatform/Assets/B_Machine.png"/>
 		  </Button>
-		  <TextBlock Name="lblFromMachine" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="  "/>
-		  <TextBlock Name="lblToMachine" FontSize="11" FontFamily="Microsoft Sans Serif"  HorizontalAlignment="Right" VerticalAlignment="Top" Text="  "/>
+		  <TextBlock Name="lblFromMachine" FontSize="11"   HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="  "/>
+		  <TextBlock Name="lblToMachine" FontSize="11"   HorizontalAlignment="Right" VerticalAlignment="Top" Text="  "/>
 	  </Panel>
     </StackPanel>  
     <StackPanel Grid.Column="3" Spacing="20" Grid.Row="0">
@@ -243,43 +279,22 @@
        <ToggleSwitch Name="cboxIsSteerModule" Margin="0 50"  Command="{Binding cboxIsSteerModule}" IsChecked="True"/>
        <ToggleSwitch Name="cboxIsMachineModule" Margin="0 20"  Command="{Binding cboxIsMachineModule}"  IsChecked="True"/>	
     </StackPanel>
-    <StackPanel Grid.Column="5" Spacing="5" Margin="10"  Grid.Row="0">
-   
-     <TextBlock Name="lblMount" FontSize="11" FontFamily="Microsoft Sans Serif"  Text="  "/>
-     <TextBlock Name="lblNTRIP_IP" FontSize="11" FontFamily="Microsoft Sans Serif"  Text="  "/>
-    	 
-     <TextBlock Name="lblWorkSwitchStatus" FontSize="11" FontFamily="Microsoft Sans Serif" >*</TextBlock>
-     <TextBlock Name="label9" FontSize="11" FontFamily="Microsoft Sans Serif" >Work:</TextBlock>
-     <TextBlock Name="lblSwitchStatus" FontSize="11" FontFamily="Microsoft Sans Serif" >*</TextBlock>
-     <TextBlock Name="label2" FontSize="11" FontFamily="Microsoft Sans Serif" >Switch:</TextBlock>
-     <TextBlock Name="lblWASCounts" FontSize="11" FontFamily="Microsoft Sans Serif" >Only</TextBlock>
-     <TextBlock Name="lblSteerAngle" FontSize="11" FontFamily="Microsoft Sans Serif" >UDP</TextBlock>
-     <TextBlock Name="label4" FontSize="11" FontFamily="Microsoft Sans Serif" >Counts:</TextBlock>
-     <TextBlock Name="label3" FontSize="11" FontFamily="Microsoft Sans Serif" >Angle:</TextBlock>
-   
-     <TextBlock Name="label10" FontSize="11" FontFamily="Microsoft Sans Serif" >8  &lt;&lt;  1</TextBlock> 
-     <TextBlock Name="lbl1To8" FontSize="11" FontFamily="Microsoft Sans Serif" >00000000</TextBlock>
-     <TextBlock Name="label12" FontSize="11" FontFamily="Microsoft Sans Serif" >16 &lt;&lt;  9</TextBlock>
-     <TextBlock Name="lbl9To16" FontSize="11" FontFamily="Microsoft Sans Serif" >00000000</TextBlock>
-     <Button Name="btnRelayTest" Height="73" Width="61"   Command="{Binding RelayTest}" Content="Test">
-      <Image Source="avares://AgConn.CrossPlatform/Assets/TestRelays.png"/>
-    </Button>
-    </StackPanel>
+  
     <StackPanel Grid.Column="6" Spacing="5" Margin="10" Grid.Row="0">
      <WrapPanel>
-      <TextBlock Name="label13" FontSize="11" FontFamily="Microsoft Sans Serif" >ID:</TextBlock>
-      <TextBlock Name="lblStationID" FontSize="11" FontFamily="Microsoft Sans Serif" >0</TextBlock>
+      <TextBlock Name="label13" FontSize="11"  >ID:</TextBlock>
+      <TextBlock Name="lblStationID" FontSize="11"  >0</TextBlock>
      </WrapPanel> 
      <WrapPanel>
-      <TextBlock Name="label11" FontSize="11" FontFamily="Microsoft Sans Serif" >L:</TextBlock>
-      <TextBlock Name="lblPacketSize" FontSize="11" FontFamily="Microsoft Sans Serif" >0</TextBlock>
+      <TextBlock Name="label11" FontSize="11"  >L:</TextBlock>
+      <TextBlock Name="lblPacketSize" FontSize="11"  >0</TextBlock>
      </WrapPanel>
       <WrapPanel>
-      <TextBlock Name="label5" FontSize="11" FontFamily="Microsoft Sans Serif" >Found:</TextBlock>
-      <TextBlock Name="lblCount" FontSize="11" FontFamily="Microsoft Sans Serif" >-</TextBlock>
+      <TextBlock Name="label5" FontSize="11"  >Found:</TextBlock>
+      <TextBlock Name="lblCount" FontSize="11"  >-</TextBlock>
      </WrapPanel>
-      <Button Name="lblMessages" Height="335" Width="87" FontSize="11" FontFamily="Microsoft Sans Serif"  Command="{Binding lblMessages}">1888 - 18</Button>
-      <TextBlock Name="lblMessagesFound" FontSize="11" FontFamily="Microsoft Sans Serif" >0</TextBlock>
+      <Button Name="lblMessages" Height="335" Width="87" FontSize="11"   Command="{Binding lblMessages}">1888 - 18</Button>
+      <TextBlock Name="lblMessagesFound" FontSize="11"  >0</TextBlock>
      
     </StackPanel>
     <StackPanel Orientation="Horizontal" Grid.Row="1" >

@@ -1,0 +1,246 @@
+<?xml version="1.0"?>
+<UserControl xmlns="https://github.com/avaloniaui" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:local="clr-namespace:AgConn.CrossPlatform" 
+             x:Class="AgConn.CrossPlatform.Views.NtripView" 
+             mc:Ignorable="d" 
+             d:DataContext="{x:Static local:App.NtripViewModel}">
+  <UserControl.Styles>
+    <Style Selector="ToggleButton">
+      <Setter Property="HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Style Selector="^:checked /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Green"/>
+      </Style>
+      <Style Selector="^:unchecked /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Red"/>
+      </Style>
+    </Style>
+  </UserControl.Styles>
+  <DockPanel>
+  <Border Background="{DynamicResource SystemAccentColor}" DockPanel.Dock="Top">
+        <TextBlock
+          Margin="16"
+          Text="AgConn" Foreground="White"/>
+      </Border>
+  <Grid  DockPanel.Dock="Top">
+    <TabControl Name="tabControl1" TabStripPlacement="Top" DockPanel.Dock="Bottom"  >
+      <TabItem Name="tabPage1" Header="Source">
+        <StackPanel Spacing="7">
+           <WrapPanel>
+          <TextBlock Name="label14" FontSize="11" >Host</TextBlock>
+          <TextBox Name="tboxHostName" Text="{Binding HostName}" Height="30" Width="221" Margin="10 0" IsReadOnly="True" TextWrapping="Wrap">HostName</TextBox>
+           </WrapPanel>
+          <WrapPanel Margin="10">
+          <TextBlock Name="label10"  FontSize="11" >IP</TextBlock>
+          <ListBox Name="listboxIP" ItemsSource="{Binding Items}" Margin="10 0" Width="200" Height="50"/>
+         </WrapPanel>
+          <!--Click="tboxUserPassword}"-->
+          <Button Name="btnGetSourceTable" Height="37" Width="235" Margin="10" Command="{Binding GetSourceTable}">Get Source Table</Button>
+          <TextBlock Name="label13" FontSize="11" >Mount</TextBlock>
+         <TextBox Name="tboxMount" Height="33" Width="300" Text="{Binding Mount}" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+          <!--Click="tboxMount}"-->
+          <WrapPanel>
+          <TextBlock Name="label3" FontSize="11"  VerticalAlignment="Center">Username</TextBlock>
+           <TextBox Name="tboxUserName" Height="33" Width="252" TextWrapping="Wrap" Margin="9 0" Text="{Binding Username}"/>
+          <Button Classes="accent" Name="btnPassPassword" Command ="{Binding PassPassword}" Height="40" Width="63" Margin="10 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">(o)</Button>
+          </WrapPanel>
+          <WrapPanel>
+		      <TextBlock Name="label12" FontSize="11"  VerticalAlignment="Center" >Password</TextBlock>
+		       <TextBox Name="tboxUserPassword" PasswordChar="*" Watermark="Enter your password" Height="33" Width="252" TextWrapping="Wrap" Margin="10 0" Text="{Binding UserPassword}"/>
+		      <Button Classes="accent" Name="btnPassUsername" Command="{Binding PassUsername}" Height="40" Width="63" Margin="10 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">(o)</Button>
+          </WrapPanel>
+            <TextBlock Name="label4" FontSize="11" >Enter Broadcaster URL or IP </TextBlock>
+             <TextBox Name="tboxEnterURL" Text="{Binding EnterURL}" Height="33" Width="341" TextWrapping="Wrap" HorizontalAlignment="Left">www.rtk2go.com</TextBox>
+          <!-- Click="tboxEnterURL}"-->
+           <Button Name="btnGetIP" Height="40" Width="157"  Content="   Verify URL" Command="{Binding GetIP}"/>
+          <WrapPanel>
+          <TextBlock Name="label5" FontSize="11" >IP:</TextBlock>
+           <TextBox Name="tboxCasterIP" Text="{Binding CasterIP}" Height="33" Width="170" Margin="10 0" IsReadOnly="True" TextWrapping="Wrap">192.168.188.255</TextBox>
+         </WrapPanel>
+          <StackPanel>
+		      <TextBlock Name="label7" FontSize="11" >Caster Port:</TextBlock>
+		      <NumericUpDown Name="nudCasterPort" Increment="1" Value="{Binding CasterPort}" Width="150" HorizontalAlignment="Left"/>
+		      <TextBlock Name="label6" FontSize="11" >Default: 2101</TextBlock>
+          </StackPanel>
+        </StackPanel>
+      </TabItem>
+      <TabItem Name="tabPage2" Header="Position">
+        <StackPanel>
+          <TextBlock Name="label1" FontSize="11" >Send To GPS Using:</TextBlock>
+          <ToggleSwitch Name="cboxToSerial" Content="ToSerial" IsChecked="{Binding ToSerial}">
+               </ToggleSwitch>
+          <ToggleSwitch Name="cboxToUDP" Content="ToUDP" IsChecked="{Binding ToUDP}">
+          </ToggleSwitch>
+          <NumericUpDown Name="nudSendToUDPPort" Value="{Binding SendToUDPPort}" />
+          <TextBlock Name="label19" FontSize="11" >0 = Off</TextBlock>
+          <TextBlock Name="label9" FontSize="11" >Current GPS Fix:</TextBlock>
+          <TextBlock Name="label15" FontSize="11" >GGA Interval (secs)</TextBlock>
+          <NumericUpDown Name="nudGGAInterval" Value="{Binding GGAInterval}" Width="150"/>
+         
+          <NumericUpDown Name="nudLatitude" Value="{Binding Latitude}" Width="150"/>
+          <NumericUpDown Name="nudLongitude" Value="{Binding Longitude}" Width="150"/>
+          <ComboBox Name="cboxGGAManual" Width="200">
+            <ComboBoxItem>Use Manual Fix</ComboBoxItem>
+            <ComboBoxItem>Use GPS Fix</ComboBoxItem>
+          </ComboBox>
+          <StackPanel>
+           <TextBlock Name="label17" FontSize="11" >Manual Fix:</TextBlock>
+           <WrapPanel>
+          <TextBlock Name="label8" FontSize="11" >Lon:</TextBlock>
+           <TextBox Name="tboxCurrentLat" Text="{Binding CurrentLat}" Height="33" Width="224" IsReadOnly="True" TextWrapping="Wrap">53.2398652</TextBox>
+           </WrapPanel>
+           <WrapPanel>
+           <TextBlock Name="label2" FontSize="11" >Lat:</TextBlock>
+        <TextBox Name="tboxCurrentLon" Text="{Binding CurrentLon}" Height="33" Width="224" IsReadOnly="True" TextWrapping="Wrap">-111.1234567</TextBox>
+        </WrapPanel>
+         <TextBlock Name="label11" FontSize="11" >Lat:</TextBlock>
+         
+          <TextBlock Name="label16" FontSize="11" >Lon:</TextBlock>
+              
+          <Button Name="btnSetManualPosition" Height="33" Width="224"  Command="{Binding SetManualPosition}">Send To Manual Fix</Button>
+          </StackPanel>
+        </StackPanel>
+      </TabItem>
+      <TabItem Name="tabPage3" Header="Advanced">
+        <StackPanel>
+          <ComboBox Name="comboboxPacketSize" Height="37" Width="112">
+            <ComboBoxItem>64</ComboBoxItem>
+            <ComboBoxItem>128</ComboBoxItem>
+            <ComboBoxItem>256</ComboBoxItem>
+          </ComboBox>
+          <TextBlock Name="labelRtcmPort" FontSize="11"  Text="UDP Send Packet Burst&#10;Default 256 bytes"/>
+          <ComboBox Name="cboxHTTP" Height="33" Width="80">
+            <ComboBoxItem>1.0</ComboBoxItem>
+            <ComboBoxItem>1.1</ComboBoxItem>
+          </ComboBox>
+          <ToggleSwitch Name="checkBoxusetcp" IsChecked="{Binding Usetcp}">Only TCP:Port</ToggleSwitch>
+          <TextBlock Name="label20" FontSize="11" >HTTP:</TextBlock>
+        </StackPanel>
+      </TabItem>
+    </TabControl>
+     </Grid>
+     <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right" Spacing="10" Margin="10">
+      <ToggleSwitch Name="cboxIsNTRIPOn"  Content="NTRIP" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsChecked="{Binding IsNTRIPOn}"/>
+      <Button Name="btnSerialCancel" Height="64" Width="105" Content="Cancel" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  Command="{Binding SerialCancel}">
+      </Button>
+      <Button Name="btnSerialOK" Height="64" Width="105" Content="OK" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding SerialOK}">
+      </Button>
+       <Button  Classes="accent" Content="Close"  Height="63" Width="91" Command="{Binding Close}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+    </StackPanel>
+    </DockPanel>
+</UserControl>  
+  
+  
+   <!--DockPanel>
+  <Border Background="{DynamicResource SystemAccentColor}" DockPanel.Dock="Top">
+        <TextBlock
+          Margin="16"
+          Text="AgConn" Foreground="White"/>
+      </Border>
+  <Grid Height="648" Width="767" DockPanel.Dock="Top">
+    <TabControl Name="tabControl1" TabStripPlacement="Top" DockPanel.Dock="Bottom"  >
+      <TabItem Name="tabPage1" Header="Source">
+        <StackPanel-->
+         
+       
+  
+          <!--ListBox Name="listboxIP" ItemsSource="{Binding Items}">
+            <ListBoxItem>1</ListBoxItem>
+            <ListBoxItem>2</ListBoxItem>
+            <ListBoxItem>3</ListBoxItem>
+          </ListBox-->
+         
+          <!--Click="tboxUserPassword}"-->
+          <!--Button Name="btnGetSourceTable" Height="37" Width="235" Command="{Binding GetSourceTable}">Get Source Table</Button>
+          <TextBlock Name="label13" FontSize="11" >Mount</TextBlock>
+         <TextBox Name="tboxMount" Height="33" Width="341" TextWrapping="Wrap"/-->
+          <!--Click="tboxMount}"-->
+          <!--WrapPanel>
+          <TextBlock Name="label3" FontSize="11" >Username</TextBlock>
+           <TextBox Name="tboxUserName" Height="33" Width="252" TextWrapping="Wrap"/>
+          <Button Name="btnPassPassword" Height="40" Width="63" Command="{Binding PassPassword}">(o)</Button>
+          </WrapPanel>
+          <WrapPanel>
+		      <TextBlock Name="label12" FontSize="11" >Password</TextBlock>
+		       <TextBox Name="tboxUserPassword" Height="33" Width="252" TextWrapping="Wrap"/>
+		      <Button Name="btnPassUsername" Height="40" Width="63" Command="{Binding PassUsername}">(o)</Button>
+          </WrapPanel>
+          <Button Name="btnGetIP" Height="40" Width="157" Command="{Binding GetIP}" Content="   Confirm IP"/>
+          <TextBox Name="tboxCasterIP" Height="33" Width="170" TextAlignment="Center" IsReadOnly="True" TextWrapping="Wrap">192.168.188.255</TextBox>
+          <TextBox Name="tboxEnterURL" Height="33" Width="341" TextWrapping="Wrap">www.rtk2go.com</TextBox-->
+          <!-- Click="tboxEnterURL}"-->
+          <!--TextBlock Name="label4" FontSize="11" >Enter Broadcaster URL or IP </TextBlock>
+          <TextBlock Name="label5" FontSize="11" >IP:</TextBlock>
+          <TextBlock Name="label10" FontSize="11" >IP</TextBlock>
+          <TextBlock Name="label14" FontSize="11" >Host</TextBlock>
+          <TextBox Name="tboxHostName" Height="30" Width="221" IsReadOnly="True" TextWrapping="Wrap">HostName</TextBox>
+          <StackPanel>
+		      <TextBlock Name="label7" FontSize="11" >Caster Port:</TextBlock>
+		      <NumericUpDown Name="nudCasterPort" Increment="1"/>
+		      <TextBlock Name="label6" FontSize="11" >Default: 2101</TextBlock>
+          </StackPanel>
+        </StackPanel>
+      </TabItem>
+      <TabItem Name="tabPage2" Header="Position">
+        <StackPanel>
+          <TextBlock Name="label1" FontSize="11" >Send To GPS Using:</TextBlock>
+          <ToggleButton Name="cboxToSerial" Height="50" Width="150" TabIndex="140" IsChecked="{Binding ToSerial}">
+            <Image Source="avares://AgConn.CrossPlatform/Assets/NtripToSerial.png"/>
+          </ToggleButton>
+          <ToggleButton Name="cboxToUDP" Height="50" Width="150" TabIndex="141" IsChecked="{Binding ToUDP}">
+            <Image Source="avares://AgConn.CrossPlatform/Assets/NtripToUDP.png"/>
+          </ToggleButton>
+          <NumericUpDown Name="nudSendToUDPPort" />
+          <TextBlock Name="label19" FontSize="11" >0 = Off</TextBlock>
+          <TextBlock Name="label9" FontSize="11" >Current GPS Fix:</TextBlock>
+          <TextBlock Name="label15" FontSize="11" >GGA Interval (secs)</TextBlock>
+          <NumericUpDown Name="nudGGAInterval" Margin="411,338,151,288"/>
+          <TextBlock Name="label2" FontSize="11" >Lat:</TextBlock>
+          <NumericUpDown Name="nudLatitude"/>
+          <NumericUpDown Name="nudLongitude"/>
+          <ComboBox Name="cboxGGAManual" Height="33" Width="192">
+            <ComboBoxItem>Use Manual Fix</ComboBoxItem>
+            <ComboBoxItem>Use GPS Fix</ComboBoxItem>
+          </ComboBox>
+          <TextBlock Name="label8" FontSize="11" >Lon:</TextBlock>
+          <TextBlock Name="label17" FontSize="11" >Manual Fix:</TextBlock>
+          <TextBlock Name="label16" FontSize="11" >Lon:</TextBlock>
+          <TextBox Name="tboxCurrentLat" Height="33" Width="224" IsReadOnly="True" TextWrapping="Wrap">53.2398652</TextBox>
+          <TextBlock Name="label11" FontSize="11" >Lat:</TextBlock>
+          <TextBox Name="tboxCurrentLon" Height="33" Width="224" IsReadOnly="True" TextWrapping="Wrap">-111.1234567</TextBox>
+          <Button Name="btnSetManualPosition" Height="33" Width="224" Command="{Binding SetManualPosition}">Send To Manual Fix</Button>
+        </StackPanel>
+      </TabItem>
+      <TabItem Name="tabPage3" Header="Advanced">
+        <StackPanel>
+          <ComboBox Name="comboboxPacketSize" Height="37" Width="112">
+            <ComboBoxItem>64</ComboBoxItem>
+            <ComboBoxItem>128</ComboBoxItem>
+            <ComboBoxItem>256</ComboBoxItem>
+          </ComboBox>
+          <TextBlock Name="labelRtcmPort" FontSize="11"  Text="UDP Send Packet Burst&#10;Default 256 bytes"/>
+          <ComboBox Name="cboxHTTP" Height="33" Width="80">
+            <ComboBoxItem>1.0</ComboBoxItem>
+            <ComboBoxItem>1.1</ComboBoxItem>
+          </ComboBox>
+          <ToggleButton Name="checkBoxusetcp" Height="41" Width="129">Only TCP:Port</ToggleButton>
+          <TextBlock Name="label20" FontSize="11" >HTTP:</TextBlock>
+        </StackPanel>
+      </TabItem>
+    </TabControl>
+     </Grid>
+     <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right" Spacing="10">
+      <ToggleButton Name="cboxIsNTRIPOn" Height="50" Width="150" TabIndex="92" IsChecked="{Binding IsNTRIPOn}" Content="NTRIP On"/>
+      <Button Name="btnSerialCancel" Height="64" Width="105" Command="{Binding SerialCancel}">
+        <Image Source="avares://AgConn.CrossPlatform/Assets/Cancel64.png" Height="50" Width="50"/>
+      </Button>
+      <Button Name="btnSerialOK" Height="64" Width="105" Command="{Binding SerialOK}">
+        <Image Source="avares://AgConn.CrossPlatform/Assets/OK64.png" Height="50" Width="50"/>
+      </Button>
+       <Button Classes="accent" Content="Close" Command="{Binding Close}" Height="63" Width="91"/> 
+    </StackPanel>
+  </DockPanel-->
+

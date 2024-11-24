@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="using:FluentAvalonia.UI.Controls" xmlns:local="clr-namespace:AgConn.CrossPlatform" x:Class="AgConn.CrossPlatform.Views.EthernetView" mc:Ignorable="d" d:DataContext="{x:Static local:App.EthernetViewModel}">
+	 <UserControl.Styles>
+        <StyleInclude Source="/Styles/GroupBox.axaml"/>
+	</UserControl.Styles>
+	<Grid Height="232" Width="772">
+	   <NumericUpDown Name="nudFourthIP"  Width="111" FontSize="11" FontFamily="Microsoft Sans Serif" TextAlignment="Center" TabIndex="530" Background="AliceBlue" Value="{Binding FourthIP }" Margin="552,12,109,171" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></NumericUpDown>
+		<NumericUpDown Name="nudThirdIP" Width="111" FontSize="11" FontFamily="Microsoft Sans Serif" TextAlignment="Center" TabIndex="527" Background="AliceBlue" Value="{Binding ThirdIP }" Margin="426,12,235,171" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></NumericUpDown>
+		<NumericUpDown Name="nudSecndIP" Width="111" FontSize="11" FontFamily="Microsoft Sans Serif" TextAlignment="Center" TabIndex="526" Background="AliceBlue" Value="{Binding SecndIP }" Margin="300,12,361,171" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></NumericUpDown>
+		<NumericUpDown Name="nudFirstIP" Width="111" FontSize="11" FontFamily="Microsoft Sans Serif" TextAlignment="Center" TabIndex="525" Background="AliceBlue" Value="{Binding FirstIP }" Margin="174,12,487,171" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></NumericUpDown>
+		<TextBlock Name="label2" Height="44" Width="33" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="528" Margin="278,6,461,182" HorizontalAlignment="Right" VerticalAlignment="Bottom">.</TextBlock>
+		<TextBlock Name="label3" Height="44" Width="33" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="529" Margin="403,6,336,182" HorizontalAlignment="Right" VerticalAlignment="Bottom">.</TextBlock>
+		<TextBlock Name="label13" Height="86" Width="170" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="518" Background="White" Margin="10,12,600,154" HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="Loopback Address&#x0a;(Don't Change For Windows)"></TextBlock>
+		<ToggleSwitch Name="cboxIsUDPOn" TabIndex="92" Margin="423,140,190,30" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsChecked="{Binding IsUDPOn}">UDP On</ToggleSwitch>
+		<HeaderedContentControl Background="LightGray" Margin="158,125,434,18" HorizontalAlignment="Right" VerticalAlignment="Bottom" Header="NMEA to Network">	<Canvas Height="65" Width="156">
+		<ToggleSwitch Name="cboxIsSendNMEAToUDP" TabIndex="92" Margin="23,10,623,184" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsChecked="{Binding IsSendNMEAToUDP}">NMEA</ToggleSwitch>
+		</Canvas> 		</HeaderedContentControl>
+		<Button Classes="accent" Name="btnSerialCancel" Height="79" Width="92" TabIndex="71" Content="OK" Command="{Binding SerialCancel }" Margin="658,126,22,27" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+		<TextBlock Name="label1" Height="44" Width="33" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="531" Margin="529,6,210,182" HorizontalAlignment="Right" VerticalAlignment="Bottom">.</TextBlock>
+	</Grid>
+</UserControl>
+

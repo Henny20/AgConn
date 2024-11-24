@@ -6,11 +6,11 @@
         xmlns:views1="clr-namespace:AgConn.CrossPlatform.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AgConn.CrossPlatform.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/result.ico"
         Title="AgConn"
         SystemDecorations="BorderOnly"
         SizeToContent="WidthAndHeight" CanResize="False" >
-        <Border BorderBrush="Black" BorderThickness="1" >
-        <views1:MainView />
-        </Border>
+       <Border BorderBrush="Black" BorderThickness="1" >
+           <views1:MainView />
+       </Border>
 </Window>
