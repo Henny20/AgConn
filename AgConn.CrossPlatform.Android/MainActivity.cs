@@ -67,9 +67,7 @@ public class MainActivity : AvaloniaMainActivity<App>
     const string ACTION_USB_PERMISSION = "com.CompanyName.AAgIO.USB_PERMISSION";
 
     UsbManager usbManager;
-    // ListView listView;
-    //  TextView progressBarTitle;
-    //  ProgressBar progressBar;
+ 
     ConnectivityManager connMgr;
 
     // UsbSerialPortAdapter adapter;
@@ -83,14 +81,8 @@ public class MainActivity : AvaloniaMainActivity<App>
     {
         base.OnCreate(bundle);
 
-        // Set our view from the "main" layout resource
-        //SetContentView(Resource.Layout.Main);
-
         usbManager = GetSystemService(Context.UsbService) as UsbManager;
-        // listView = FindViewById<ListView>(Resource.Id.deviceList);
-        // progressBar = FindViewById<ProgressBar>(Resource.Id.progressBar);
-        //  progressBarTitle = FindViewById<TextView>(Resource.Id.progressBarTitle);
-
+     
         connMgr = (ConnectivityManager)GetSystemService(Context.ConnectivityService);
         //   NetworkInfo networkInfo = connMgr.ActiveNetworkInfo;
         //  hostname = networkInfo.TypeName;
@@ -104,13 +96,6 @@ public class MainActivity : AvaloniaMainActivity<App>
     protected override async void OnResume()
     {
         base.OnResume();
-
-        // adapter = new UsbSerialPortAdapter(this);
-        // listView.Adapter = adapter;
-
-        // listView.ItemClick += async (sender, e) => {
-        //    await OnItemClick(sender, e);
-        // };
 
         await PopulateListAsync();
 
@@ -134,15 +119,7 @@ public class MainActivity : AvaloniaMainActivity<App>
         if (tmp != null)
             UnregisterReceiver(tmp);
     }
-    /***
-    protected override void OnStop(){
-        base.OnStop();
-
-        var temp = detachedReceiver; 
-        if (temp != null)
-            UnregisterReceiver(temp);
-    }
-    *****/
+    
     internal static Task<IList<IUsbSerialDriver>> FindAllDriversAsync(UsbManager usbManager)
     {
         // using the default probe table
@@ -159,8 +136,7 @@ public class MainActivity : AvaloniaMainActivity<App>
 
     async Task PopulateListAsync()
     {
-        //ShowProgressBar();
-
+   
         Log.Info(TAG, "Refreshing device list ...");
 
         var drivers = await FindAllDriversAsync(usbManager);
@@ -175,10 +151,8 @@ public class MainActivity : AvaloniaMainActivity<App>
             Log.Info(TAG, "Succes ermee ...");
         }
 
-        //adapter.NotifyDataSetChanged();
-        //progressBarTitle.Text = string.Format("{0} device{1} found", adapter.Count, adapter.Count == 1 ? string.Empty : "s");
         Toast.MakeText(this, string.Format("{0} device{1} found", adapter.Count, adapter.Count == 1 ? string.Empty : "s"), ToastLength.Short).Show();
-        //HideProgressBar();
+        
         Log.Info(TAG, "Done refreshing, " + adapter.Count + " entries found.");
     }
     
@@ -211,16 +185,6 @@ public class MainActivity : AvaloniaMainActivity<App>
 
      }
      
-    void ShowProgressBar()
-    {
-        // progressBar.Visibility = ViewStates.Visible;
-        //   progressBarTitle.Text = GetString(Resource.String.refreshing);
-    }
-
-    void HideProgressBar()
-    {
-        // progressBar.Visibility = ViewStates.Invisible;
-    }
 
     class NetBroadcastReceiver : BroadcastReceiver
     {
