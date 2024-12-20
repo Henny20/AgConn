@@ -62,148 +62,144 @@ namespace AgConn.CrossPlatform
    
     public interface IAgConnService
     {
-    ObservableCollection<GPSItem> GPS { get; }
-     //ObservableCollection<UDPSentence> Udp{ get; }
-     string nineToSixteen {get; set;}
-      string oneToEight {get; set;} 
-	 string steerAngle {get; set;}
-	  string WASCounts {get; set;}
-   
-    string currentLat { get; set; }
-     string curentLon { get; set; }
-     
-      double longtd { get; set; }
-     double latitd { get; set; }
-		
-		Socket loopBackSocket { get; set; }
-		Socket UDPSocket { get; set; }
-		bool isUDPNetworkConnected { get; set; }
-		Task LoadUDPNetwork();
-		void Init();
-		void Close();
-		void RelayTest();
-
-		ushort satellitesData { get;  }
-		double latitudeSend { get;  }
-		double longitudeSend { get;  }
-		string FixQuality { get; }
-		float hdopData { get; set; }
-		float speedData { get; set; }
-
-		float rollData { get; }
-		short imuRollData { get; }
-		short imuPitchData { get; set; }
-		short imuYawRateData { get; set; }
-		ushort imuHeadingData { get; set; }
-
-		float ageData { get; }
-		float headingTrueData { get; set; }
-		float headingTrueDualData { get; set; }
-
-		float  altitudeData { get; set; }
-
-		string vtgSentence { get; set; }
-		string ggaSentence { get; set; }
-		string paogiSentence { get; set; }
-		string avrSentence { get; set; }
-		string hdtSentence { get; set; }
-		string hpdSentence { get; set; }
-		string pandaSentence { get; set; }
-		string ksxtSentence { get; set; }
+	string nineToSixteen {get; set;}
+	string oneToEight {get; set;} 
+	string steerAngle {get; set;}
+	string WASCounts {get; set;}
 	
-		bool isGPSSentencesOn { get; set; }
-		bool isUDPMonitorOn { get; set; }
-		
-		//UDPMonitor
-		StringBuilder logUDPSentence { get; set; }
-		string iets();
-		CScanReply scanReply {get; set;}
-		byte[] ipAutoSet { get; set; }
-		
-		//NTRIP
-		int packetSizeNTRIP {get; set; }
-	    string broadCasterIP {get; set;}
-	    bool isNTRIP_RequiredOn {get; set;} 
-	    bool isRadio_RequiredOn {get; set;} 
-        bool isSerialPass_RequiredOn {get; set;} 
-        bool isSendToSerial {get; set;}
-        bool isSendToUDP {get; set;} 
-        void ConfigureNTRIP();
+	string currentLat { get; set; }
+	string curentLon { get; set; }
+	
+	double longtd { get; set; }
+	double latitd { get; set; }
+	
+	Socket loopBackSocket { get; set; }
+	Socket UDPSocket { get; set; }
+	bool isUDPNetworkConnected { get; set; }
+	Task LoadUDPNetwork();
+	void Init();
+	void Close();
+	void RelayTest();
+	
+	ushort satellitesData { get;  }
+	double latitudeSend { get;  }
+	double longitudeSend { get;  }
+	string FixQuality { get; }
+	float hdopData { get; set; }
+	float speedData { get; set; }
+	
+	float rollData { get; }
+	short imuRollData { get; }
+	short imuPitchData { get; set; }
+	short imuYawRateData { get; set; }
+	ushort imuHeadingData { get; set; }
+	
+	float ageData { get; }
+	float headingTrueData { get; set; }
+	float headingTrueDualData { get; set; }
+	
+	float  altitudeData { get; set; }
+	
+	string vtgSentence { get; set; }
+	string ggaSentence { get; set; }
+	string paogiSentence { get; set; }
+	string avrSentence { get; set; }
+	string hdtSentence { get; set; }
+	string hpdSentence { get; set; }
+	string pandaSentence { get; set; }
+	string ksxtSentence { get; set; }
+	
+	bool isGPSSentencesOn { get; set; }
+	bool isUDPMonitorOn { get; set; }
+	
+	//UDPMonitor
+	StringBuilder logUDPSentence { get; set; }
+	string iets();
+	CScanReply scanReply {get; set;}
+	byte[] ipAutoSet { get; set; }
+	
+	//NTRIP
+	int packetSizeNTRIP {get; set; }
+	string broadCasterIP {get; set;}
+	bool isNTRIP_RequiredOn {get; set;} 
+	bool isRadio_RequiredOn {get; set;} 
+	bool isSerialPass_RequiredOn {get; set;} 
+	bool isSendToSerial {get; set;}
+	bool isSendToUDP {get; set;} 
+	void ConfigureNTRIP();
     }
 
     public partial class AgConnService : IAgConnService
     {
-        
-        public ObservableCollection<GPSItem> GPS { get; }
-        //public ObservableCollection<UDPSentence> Udp { get; } = new ObservableCollection<UDPSentence>();
-       public double longtd { get; set; } = 0;
-        public double latitd { get; set; } = 0;
-         
-       public string currentLat { get; set; }
-        
-     public string curentLon { get; set; }
-        // test
-        public INotifyPropertyChanged Owner { get; set; } = default!;  
-        ///
-         
-        public ushort satellitesData { get; set; } = 0;
-          
-		public double latitudeSend { get; set; }  = 0;
-		  
-		public double longitudeSend { get; set; }  = 0;
-		// 
-		//public string FixQuality { get; set; }  = "";
-		  
-		public float hdopData { get; set; }  = 0.00f;
-		  
-		public float speedData { get; set; }  = 0.00f;
+	
+	public double longtd { get; set; } = 0;
+	public double latitd { get; set; } = 0;
+	
+	public string currentLat { get; set; }
+	
+	public string curentLon { get; set; }
+	// test
+	public INotifyPropertyChanged Owner { get; set; } = default!;  
+	///
+	
+	public ushort satellitesData { get; set; } = 0;
+	
+	public double latitudeSend { get; set; }  = 0;
+	
+	public double longitudeSend { get; set; }  = 0;
+	// 
+	//public string FixQuality { get; set; }  = "";
+	
+	public float hdopData { get; set; }  = 0.00f;
+	
+	public float speedData { get; set; }  = 0.00f;
+	
+	
+	public float rollData { get; set; }  = 0.00f;
+	
+	public short imuRollData { get; set; }  = 0;
+	
+	public short imuPitchData { get; set; }  = 0;
+	
+	public short imuYawRateData { get; set; }  = 0;
+	
+	public ushort imuHeadingData { get; set; }  = 0;
+	
+	
+	public float ageData { get; set; }  = 0.00f;
+	
+	public float headingTrueData { get; set; }  = 0.00f;
+	
+	public float headingTrueDualData { get; set; }  = 0.00f;
+	
+	
+	public float  altitudeData { get; set; }  = 0.00f;
+	
+	
+	public string vtgSentence { get; set; }  = "";
+	
+	public string ggaSentence { get; set; }  = "";
+	
+	public string paogiSentence { get; set; }  = "";
+	
+	public string avrSentence { get; set; }  = "";
+	
+	public string hdtSentence { get; set; }  = "";
+	
+	public string hpdSentence { get; set; }  = "";
+	
+	public string pandaSentence { get; set; }  = "";
+	
+	public string ksxtSentence { get; set; }  = "";
+	public bool isGPSSentencesOn { get; set; } = false;
+	
+	public bool isUDPMonitorOn { get; set; } = true;
+	
+	
+	public StringBuilder logUDPSentence { get; set; } = new StringBuilder();
+	
+	
 
-		  
-		public float rollData { get; set; }  = 0.00f;
-		  
-		public short imuRollData { get; set; }  = 0;
-		  
-		public short imuPitchData { get; set; }  = 0;
-		  
-		public short imuYawRateData { get; set; }  = 0;
-		  
-		public ushort imuHeadingData { get; set; }  = 0;
-
-		  
-		public float ageData { get; set; }  = 0.00f;
-		  
-		public float headingTrueData { get; set; }  = 0.00f;
-		  
-		public float headingTrueDualData { get; set; }  = 0.00f;
-
-		  
-		public float  altitudeData { get; set; }  = 0.00f;
-
-		  
-		public string vtgSentence { get; set; }  = "";
-		  
-		public string ggaSentence { get; set; }  = "";
-		  
-		public string paogiSentence { get; set; }  = "";
-		  
-		public string avrSentence { get; set; }  = "";
-		  
-		public string hdtSentence { get; set; }  = "";
-		  
-		public string hpdSentence { get; set; }  = "";
-		 
-		 public string pandaSentence { get; set; }  = "";
-		 
-		public string ksxtSentence { get; set; }  = "";
-		public bool isGPSSentencesOn { get; set; } = false;
-		  
-		public bool isUDPMonitorOn { get; set; } = true;
-		
-		 
-		public StringBuilder logUDPSentence { get; set; } = new StringBuilder();
-		
-		
-		
 	
         // loopback Socket
         private Socket _loopBackSocket;
@@ -231,14 +227,14 @@ namespace AgConn.CrossPlatform
             set => _isUDPNetworkConnected = value;
         }
         //labels
-       public string nineToSixteen {get; set;} = "00000000";
-       public string oneToEight {get; set;} = "00000000";
-	   public string steerAngle {get; set;} = "";
-	   public string WASCounts {get; set;} = "";
-	   public string switchStatus = "";
-	   public string workSwitchStatus = "";
-	   public string ping = "";
-	   public string pingMachine = "";
+	public string nineToSixteen {get; set;} = "00000000";
+	public string oneToEight {get; set;} = "00000000";
+	public string steerAngle {get; set;} = "";
+	public string WASCounts {get; set;} = "";
+	public string switchStatus = "";
+	public string workSwitchStatus = "";
+	public string ping = "";
+	public string pingMachine = "";
 	  
 
        private IPEndPoint epAgOpen = new IPEndPoint(IPAddress.Parse(
@@ -281,14 +277,6 @@ namespace AgConn.CrossPlatform
       
             try //udp network
             {
-              //   if (OperatingSystem.IsAndroid())
-                // {
-              //      foreach (IPAddress IPA in NetService.GetAllLocalValidIp4Addresses())
-              //      { 
-               //            string data = IPA.ToString();
-                //   }
-               //  }
-               //  else {
                 foreach (IPAddress IPA in Dns.GetHostAddresses(Dns.GetHostName()))
                 {
                     if (IPA.AddressFamily == AddressFamily.InterNetwork)
@@ -297,7 +285,6 @@ namespace AgConn.CrossPlatform
                         //  lblIP.Content += IPA.ToString().Trim() + "\r\n"; TODO
                     }
                 }
-               // }
 
                 // Initialise the socket
                 UDPSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -509,10 +496,8 @@ public string iets(){ return logUDPSentence.ToString(); }
         {
             if (isUDPNetworkConnected)
             { 
-            Console.WriteLine("isUDPNetworkconnected:  " + isUDPNetworkConnected);
                 if (isUDPMonitorOn) 
                 {
-                Console.WriteLine("UDP is on ****************");
                     if (epNtrip != null && endPoint.Port == epNtrip.Port)
                     {
                     Console.WriteLine("NTRIP on:   " + isNTRIPLogOn);
@@ -523,8 +508,7 @@ public string iets(){ return logUDPSentence.ToString(); }
                     else
                     {
                         logUDPSentence.Append(DateTime.Now.ToString("ss.fff\t") + endPoint.ToString() + "\t" + " > " + byteData[3].ToString() + "\r\n");
-                        Console.WriteLine(logUDPSentence);
-                                            
+                                              
                         
                     }
                 }
