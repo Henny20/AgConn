@@ -1,0 +1,21 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:AgConn.CrossPlatform"
+             xmlns:crossPlatform="clr-namespace:AgConn.CrossPlatform"
+             xmlns:styling="clr-namespace:FluentAvalonia.Styling;assembly=FluentAvalonia"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia" 
+             x:Class="AgConn.CrossPlatform.App"
+             RequestedThemeVariant="Default">
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        <styling:FluentAvaloniaTheme />
+         <materialIcons:MaterialIconStyles />
+    </Application.Styles>
+    <Application.Resources>
+        <FontFamily x:Key="ContentControlThemeFontFamily">avares://AgConn.CrossPlatform/Assets/Fonts#Nunito</FontFamily>
+    </Application.Resources>
+ 
+</Application>
