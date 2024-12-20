@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using System.IO.Ports;
 using AgConn.CrossPlatform.Services;
 using AgConn.CrossPlatform.Business;
 using HanumanInstitute.MvvmDialogs;
@@ -12,6 +13,7 @@ using ReactiveUI.Fody.Helpers;
 using System.Windows.Input;
 using AgConn.CrossPlatform.Views;
 using AgConn.CrossPlatform.Properties;
+using AgConn.CrossPlatform.Models;
 
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Threading;
@@ -24,32 +26,44 @@ public class MainViewModel : ViewModelBase
 
     private readonly IDialogService _dialogService;
     private readonly IStorageService _storage;
-    //private IAgConnService _agConnService;
+    private IAgConnService _agConnService;
+      private IUDPService _UDPService;
+      
+      public string log;
 
     // private DispatcherTimer oneSecondLoopTimer = new DispatcherTimer();
     // private DispatcherTimer ntripMeterTimer = new DispatcherTimer();
-    AgConnService service = new AgConnService();
+  //  AgConnService service = new AgConnService();
 
     ///
     public ICommand UDPCommand { get; }
 
-    public MainViewModel(IDialogService dialogService, IStorageService storage) //, IAgConnService agConnService)
+    public MainViewModel(IDialogService dialogService, IStorageService storage, IAgConnService agConnService, IUDPService UDPService)
     {
         this._dialogService = dialogService;
         this._storage = storage;
+        GPSData gpsData = new();
 
-        //_agConnService = agConnService;
-
+        _agConnService = agConnService;
+         _UDPService = UDPService;
+         
+        //  _UDPService.Server("0.0.0.0", 9999);
+         //  _UDPService.Server("127.0.0.1", 17777);
+           
         var interval = TimeSpan.FromMilliseconds(4000);
         Observable
                 .Timer(interval, interval)
                 .Subscribe(x =>
                 {
-                    CurrentLat = service.currentLat;
-                    CurentLon = service.curentLon;
-                    OneToEight = service.oneToEight;
-                    NineToSixteen = service.nineToSixteen;
-                    SkipCounter = service.skipCounter;
+                    CurrentLat = _agConnService.currentLat;
+                    CurentLon = _agConnService.curentLon;
+                   OneToEight = _agConnService.oneToEight;
+                 NineToSixteen = _agConnService.nineToSixteen;
+                  //  SkipCounter = service.skipCounter;
+                  // _UDPService.Client("127.0.0.1", 17777);
+                  // log = _UDPService.Send(new byte[] { 0x80, 0x81, 0x7F, 200, 3, 56, 0, 0, 0x47 });
+                 //  CurentLon = log;
+                   
                 });
 
 
@@ -63,7 +77,13 @@ public class MainViewModel : ViewModelBase
         //UDPSettings = ReactiveCommand.CreateFromTask(DialogUDPSettingsImplAsync);
         DialogNtrip = ReactiveCommand.CreateFromTask(DialogNtripImplAsync);
         DialogEthernet = ReactiveCommand.CreateFromTask(DialogEthernetImplAsync);
-        DialogConfirmClose = ReactiveCommand.CreateFromTask(DialogConfirmCloseImplAsync);
+        DialogUDP = ReactiveCommand.CreateFromTask(DialogUDPImplAsync);
+      // UDPMonitor = ReactiveCommand.CreateFromTask(UDPMonitorImplAsync);
+         UDPMonitor = ReactiveCommand.CreateFromTask(MessageBoxImplAsync);
+       
+        //MenuItem4 = ReactiveCommand.CreateFromTask(DialogGPSDataImplAsync);
+            MenuItem4 = ReactiveCommand.CreateFromTask(GPSDataImplAsync);
+         EthernetSetup = ReactiveCommand.CreateFromTask(EthernetSetupImplAsync);
         /********
         OpenFile = ReactiveCommand.CreateFromTask(OpenFileImplAsync);
         OpenFiles = ReactiveCommand.CreateFromTask(OpenFilesImplAsync);
@@ -79,17 +99,18 @@ public class MainViewModel : ViewModelBase
             //  SettingsUDP();
         });
         Quit = ReactiveCommand.Create(QuitMain);
-        /*********
-        oneSecondLoopTimer.Interval = TimeSpan.FromMilliseconds(4000);
-        oneSecondLoopTimer.IsEnabled = true;
-        //oneSecondLoopTimer.Tick += oneSecondLoopTimer_Tick;
-        oneSecondLoopTimer.Start();
-
-        ntripMeterTimer.Interval = TimeSpan.FromMilliseconds(50);
-        ntripMeterTimer.IsEnabled = true;
-        //ntripMeterTimer.Tick +=  ntripMeterTimer_Tick;
-        ntripMeterTimer.Start();
-         *********/
+        RelayTest = ReactiveCommand.Create(RelayTestImpl);
+      
+        _agConnService.Init();
+       
+                       
+                                //  if (Settings.Default.setUDP_isOn)
+        //    {
+         //       //Console.WriteLine("Settings.Default.setUDP_isOn");
+          //      _agConnService.LoadUDPNetwork();
+          //  }
+         
+           
     }
 
     private void QuitMain()
@@ -97,11 +118,35 @@ public class MainViewModel : ViewModelBase
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.Shutdown();
-            service.Close();
+            _agConnService.Close();
         }
     }
-
-
+    
+     private void RelayTestImpl()
+     {
+         _agConnService.RelayTest();
+      }    
+      
+     private async Task UDPMonitorImplAsync()
+    {
+       var vm = _dialogService.CreateViewModel<UDPMonitorViewModel>();
+       await _dialogService.ShowDialogAsync(this, vm);
+    }
+    
+      private async Task EthernetSetupImplAsync()
+    {
+       var vm = _dialogService.CreateViewModel<EthernetViewModel>();
+       await _dialogService.ShowDialogAsync(this, vm);
+    }
+    
+     private async Task LoadUDPNetworkAsync() {
+          if (Settings.Default.setUDP_isOn)
+            {
+                //Console.WriteLine("Settings.Default.setUDP_isOn");
+               await _agConnService.LoadUDPNetwork();
+            }
+    }
+ 
     [Reactive]
     public string? Output { get; set; } //not in use
 
@@ -121,7 +166,7 @@ public class MainViewModel : ViewModelBase
     public string SkipCounter { get; set; }
     
    [Reactive]
-    public string SerialPorts { get; set; }  = "/dev/tty0";
+    public string[] SerialPorts { get; set; }  = {"/dev/tty0"};
 
 
 
@@ -142,15 +187,14 @@ public class MainViewModel : ViewModelBase
             }
         }
     }
-
-
+    
     private void Dialog_ViewClosed(object? sender, EventArgs e) => DialogViewModel = null;
 
     public RxCommandUnit Show { get; }
     public RxCommandUnit CommSettings { get; }
     public RxCommandUnit Close { get; }
     public RxCommandUnit Activate { get; }
-    public RxCommandUnit DialogConfirmClose { get; } //UDPView
+    public RxCommandUnit DialogUDP{ get; } 
     public RxCommandUnit DialogNtrip { get; }
     public RxCommandUnit DialogEthernet { get; }
     //public RxCommandUnit OpenFile { get; }
@@ -161,6 +205,12 @@ public class MainViewModel : ViewModelBase
     public RxCommandUnit MessageBox { get; }
     public RxCommandUnit MessageBoxMultiple { get; }
     public RxCommandUnit Quit { get; }
+      public RxCommandUnit RelayTest { get; }
+      
+       public RxCommandUnit UDPMonitor { get; }
+         public RxCommandUnit MenuItem4 { get; }
+         public RxCommandUnit EthernetSetup { get; }
+
 
 
     private void ShowImpl()
@@ -183,7 +233,7 @@ public class MainViewModel : ViewModelBase
         await _dialogService.ShowDialogAsync(this, vm);
     }
 
-    private async Task DialogConfirmCloseImplAsync()//actually UDPView
+    private async Task DialogUDPImplAsync()
     {
         if (!Settings.Default.setUDP_isOn)
         {   //SettingsEthernet();
@@ -193,7 +243,7 @@ public class MainViewModel : ViewModelBase
         else
         {
             //SettingsUDP()
-            var vm = _dialogService.CreateViewModel<ConfirmCloseViewModel>();
+            var vm = _dialogService.CreateViewModel<UDPViewModel>();
             await _dialogService.ShowDialogAsync(this, vm);
         }
     }
@@ -208,6 +258,53 @@ public class MainViewModel : ViewModelBase
     {
         var vm = _dialogService.CreateViewModel<EthernetViewModel>();
         await _dialogService.ShowDialogAsync(this, vm);
+    }
+    
+     private async Task DialogGPSDataImplAsync()
+    {
+        var vm = _dialogService.CreateViewModel<GPSDataViewModel>();
+        await _dialogService.ShowDialogAsync(this, vm);
+    }
+    
+     private async Task MessageBoxImplAsync()
+    {
+        string log = "";
+        log += _agConnService.logUDPSentence.ToString();
+        var result = await _dialogService.ShowMessageBoxAsync(this, log, "Time  IP Address:Port  PGN", MessageBoxButton.Ok);
+        Output = result.ToString();
+    }
+    
+       private async Task GPSDataImplAsync()
+    {
+        string log = "";
+        log += "Latitude: " + _agConnService.latitd.ToString("N7") + Environment.NewLine;
+		log += "Longitude: " +  _agConnService.longtd.ToString("N7") + Environment.NewLine;
+        log += "Quality: " + _agConnService.FixQuality + Environment.NewLine;
+		log += "# Sats: " + _agConnService.satellitesData.ToString() + Environment.NewLine;
+	    log += "HDOP: " +  _agConnService.hdopData.ToString() + Environment.NewLine;
+		log += "Speed: " + _agConnService.speedData.ToString("N1") + Environment.NewLine;
+        log += "Roll: " + _agConnService.rollData.ToString("N2") + Environment.NewLine;
+				
+        log += "Age: " + _agConnService.ageData.ToString("N1") + Environment.NewLine;
+        log += "VTG: " + _agConnService.headingTrueData.ToString("N2") + Environment.NewLine;
+				//    DualHeading = _agConnService.headingTrueDualData.ToString("N2"); VTG?
+        log += "Altitude: " + _agConnService.altitudeData.ToString("N1") + Environment.NewLine;
+        log += "IMURoll: " +  _agConnService.imuRollData.ToString() + Environment.NewLine;
+	    log += "IMUPitch: " + _agConnService.imuPitchData.ToString() + Environment.NewLine;
+	    log += "IMUYawRate: " + _agConnService.imuYawRateData.ToString() + Environment.NewLine;
+	    log += "IMUHeading: " + _agConnService.imuHeadingData.ToString() + Environment.NewLine;
+	    
+	    log += "VTG: " + _agConnService.vtgSentence + Environment.NewLine;
+		log += "GGA: " + _agConnService.ggaSentence + Environment.NewLine;
+		log += "PAOGI: " + _agConnService.paogiSentence + Environment.NewLine;
+		log += "AVR: " + _agConnService.avrSentence + Environment.NewLine;
+		log += "HDT: " + _agConnService.hdtSentence + Environment.NewLine;
+		log += "HPD: " + _agConnService.hpdSentence + Environment.NewLine;
+		log += "PANDA: " + _agConnService.pandaSentence + Environment.NewLine;
+		log += "KSXT: " + _agConnService.ksxtSentence + Environment.NewLine;
+						   
+        var result = await _dialogService.ShowMessageBoxAsync(this, log, "GPS Data", MessageBoxButton.Ok);
+        Output = result.ToString();
     }
     /**********
         private async Task OpenFileImplAsync()
@@ -291,11 +388,11 @@ public class MainViewModel : ViewModelBase
         }
         *****/
 
-    private async Task MessageBoxImplAsync()
-    {
-        var result = await _dialogService.ShowMessageBoxAsync(this, "Do you want it?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
-        Output = result.ToString();
-    }
+   // private async Task MessageBoxImplAsync()
+   // {
+  //      var result = await _dialogService.ShowMessageBoxAsync(this, "Do you want it?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+   //     Output = result.ToString();
+  //  }
 
     private async Task MessageBoxMultipleImplAsync()
     {

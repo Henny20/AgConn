@@ -8,7 +8,7 @@ using AgConn.CrossPlatform.Properties;
 
 namespace AgConn.CrossPlatform.ViewModels;
 
-public class EthernetViewModel : ViewModelBase, IModalDialogViewModel, ICloseable, IViewClosed
+public class EthernetViewModel : ViewModelBase, IModalDialogViewModel, IViewLoaded, ICloseable, IViewClosed
 {
     public EthernetViewModel()
     {
