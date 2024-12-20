@@ -52,12 +52,7 @@ public class MainViewModel : ViewModelBase
                 });
 
 
-
-        var canShow = this.WhenAnyValue(x => x.DialogViewModel).Select(x => x == null);
-        Show = ReactiveCommand.Create(ShowImpl, canShow);
-        var canActivate = this.WhenAnyValue(x => x.DialogViewModel).Select(x => x != null);
-        Activate = ReactiveCommand.Create(ActivateImpl, canActivate);
-        Close = ReactiveCommand.Create(CloseImpl, canActivate);
+        Close = ReactiveCommand.Create(CloseImpl);
         CommSettings = ReactiveCommand.CreateFromTask(ShowDialogImplAsync);
       
         DialogNtrip = ReactiveCommand.CreateFromTask(DialogNtripImplAsync);
@@ -140,26 +135,6 @@ public class MainViewModel : ViewModelBase
 
 
 
-    private CommSettingsViewModel? _dialogViewModel;
-    protected CommSettingsViewModel? DialogViewModel
-    {
-        get => _dialogViewModel;
-        set
-        {
-            if (DialogViewModel != null)
-            {
-                DialogViewModel.Closed -= Dialog_ViewClosed;
-            }
-            this.RaiseAndSetIfChanged(ref _dialogViewModel, value);
-            if (DialogViewModel != null)
-            {
-                DialogViewModel.Closed += Dialog_ViewClosed;
-            }
-        }
-    }
-    
-    private void Dialog_ViewClosed(object? sender, EventArgs e) => DialogViewModel = null;
-
     public RxCommandUnit Show { get; }
     public RxCommandUnit CommSettings { get; }
     public RxCommandUnit Close { get; }
@@ -179,14 +154,7 @@ public class MainViewModel : ViewModelBase
 
 
 
-    private void ShowImpl()
-    {
-        DialogViewModel = _dialogService.CreateViewModel<CommSettingsViewModel>();
-        _dialogService.Show(this, DialogViewModel);
-    }
-
-    private void ActivateImpl() => _dialogService.Activate(DialogViewModel!);
-
+ 
     private void CloseImpl()
     {
         _dialogService.Close(DialogViewModel!);
