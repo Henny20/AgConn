@@ -4,10 +4,14 @@
         <StyleInclude Source="/Styles/GroupBox.axaml"/>
 	</UserControl.Styles>
 	<Grid Height="232" Width="772">
-	   <NumericUpDown Name="nudFourthIP"  Width="111" FontSize="11" FontFamily="Microsoft Sans Serif" TextAlignment="Center" TabIndex="530" Background="AliceBlue" Value="{Binding FourthIP }" Margin="552,12,109,171" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></NumericUpDown>
-		<NumericUpDown Name="nudThirdIP" Width="111" FontSize="11" FontFamily="Microsoft Sans Serif" TextAlignment="Center" TabIndex="527" Background="AliceBlue" Value="{Binding ThirdIP }" Margin="426,12,235,171" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></NumericUpDown>
-		<NumericUpDown Name="nudSecndIP" Width="111" FontSize="11" FontFamily="Microsoft Sans Serif" TextAlignment="Center" TabIndex="526" Background="AliceBlue" Value="{Binding SecndIP }" Margin="300,12,361,171" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></NumericUpDown>
-		<NumericUpDown Name="nudFirstIP" Width="111" FontSize="11" FontFamily="Microsoft Sans Serif" TextAlignment="Center" TabIndex="525" Background="AliceBlue" Value="{Binding FirstIP }" Margin="174,12,487,171" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></NumericUpDown>
+	   <NumericUpDown Name="nudFourthIP"  FormatString="N0"
+               ParsingNumberStyle="Integer" Width="111" FontSize="11" FontFamily="Microsoft Sans Serif" TextAlignment="Center" TabIndex="530" Background="AliceBlue" Value="{Binding FourthIP }" Margin="552,12,109,171" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></NumericUpDown>
+		<NumericUpDown Name="nudThirdIP" FormatString="N0"
+               ParsingNumberStyle="Integer" Width="111" FontSize="11" FontFamily="Microsoft Sans Serif" TextAlignment="Center" TabIndex="527" Background="AliceBlue" Value="{Binding ThirdIP }" Margin="426,12,235,171" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></NumericUpDown>
+		<NumericUpDown Name="nudSecndIP" FormatString="N0"
+               ParsingNumberStyle="Integer" Width="111" FontSize="11" FontFamily="Microsoft Sans Serif" TextAlignment="Center" TabIndex="526" Background="AliceBlue" Value="{Binding SecndIP }" Margin="300,12,361,171" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></NumericUpDown>
+		<NumericUpDown Name="nudFirstIP" FormatString="N0"
+               ParsingNumberStyle="Integer" Width="111" FontSize="11" FontFamily="Microsoft Sans Serif" TextAlignment="Center" TabIndex="525" Background="AliceBlue" Value="{Binding FirstIP }" Margin="174,12,487,171" HorizontalAlignment="Right" VerticalAlignment="Bottom" ></NumericUpDown>
 		<TextBlock Name="label2" Height="44" Width="33" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="528" Margin="278,6,461,182" HorizontalAlignment="Right" VerticalAlignment="Bottom">.</TextBlock>
 		<TextBlock Name="label3" Height="44" Width="33" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="529" Margin="403,6,336,182" HorizontalAlignment="Right" VerticalAlignment="Bottom">.</TextBlock>
 		<TextBlock Name="label13" Height="86" Width="170" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="518" Background="White" Margin="10,12,600,154" HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="Loopback Address&#x0a;(Don't Change For Windows)"></TextBlock>

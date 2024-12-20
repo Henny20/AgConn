@@ -26,7 +26,7 @@
           Text="AgConn" Foreground="White"/>
       </Border>
   <Grid  DockPanel.Dock="Top">
-    <TabControl Name="tabControl1" TabStripPlacement="Top" DockPanel.Dock="Bottom"  >
+    <TabControl Name="tabControl1" IsEnabled="True" TabStripPlacement="Top" DockPanel.Dock="Bottom"  ><!--IsEnabled="{Binding Control1}"-->
       <TabItem Name="tabPage1" Header="Source">
         <StackPanel Spacing="7">
            <WrapPanel>
@@ -38,19 +38,19 @@
           <ListBox Name="listboxIP" ItemsSource="{Binding Items}" Margin="10 0" Width="200" Height="50"/>
          </WrapPanel>
           <!--Click="tboxUserPassword}"-->
-          <Button Name="btnGetSourceTable" Height="37" Width="235" Margin="10" Command="{Binding GetSourceTable}">Get Source Table</Button>
+          <Button Classes="accent" Name="btnGetSourceTable" Height="37" Width="235" Margin="10" Command="{Binding GetSourceTable}">Get Source Table</Button>
           <TextBlock Name="label13" FontSize="11" >Mount</TextBlock>
          <TextBox Name="tboxMount" Height="33" Width="300" Text="{Binding Mount}" TextWrapping="Wrap" HorizontalAlignment="Left"/>
           <!--Click="tboxMount}"-->
           <WrapPanel>
           <TextBlock Name="label3" FontSize="11"  VerticalAlignment="Center">Username</TextBlock>
            <TextBox Name="tboxUserName" Height="33" Width="252" TextWrapping="Wrap" Margin="9 0" Text="{Binding Username}"/>
-          <Button Classes="accent" Name="btnPassPassword" Command ="{Binding PassPassword}" Height="40" Width="63" Margin="10 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">(o)</Button>
+            <Button Classes="accent" Name="btnPassUsername" Command="{Binding PassUsername}" Height="40" Width="63" Margin="10 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">(o)</Button>
           </WrapPanel>
           <WrapPanel>
 		      <TextBlock Name="label12" FontSize="11"  VerticalAlignment="Center" >Password</TextBlock>
 		       <TextBox Name="tboxUserPassword" PasswordChar="*" Watermark="Enter your password" Height="33" Width="252" TextWrapping="Wrap" Margin="10 0" Text="{Binding UserPassword}"/>
-		      <Button Classes="accent" Name="btnPassUsername" Command="{Binding PassUsername}" Height="40" Width="63" Margin="10 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">(o)</Button>
+		     <Button Classes="accent" Name="btnPassPassword" Command ="{Binding PassPassword}" Height="40" Width="63" Margin="10 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">(o)</Button>
           </WrapPanel>
             <TextBlock Name="label4" FontSize="11" >Enter Broadcaster URL or IP </TextBlock>
              <TextBox Name="tboxEnterURL" Text="{Binding EnterURL}" Height="33" Width="341" TextWrapping="Wrap" HorizontalAlignment="Left">www.rtk2go.com</TextBox>
@@ -106,10 +106,10 @@
       </TabItem>
       <TabItem Name="tabPage3" Header="Advanced">
         <StackPanel>
-          <ComboBox Name="comboboxPacketSize" Height="37" Width="112">
-            <ComboBoxItem>64</ComboBoxItem>
+          <ComboBox Name="comboboxPacketSize"  ItemsSource="{Binding PacketSizes}" SelectedValue="{Binding PacketSize}" Height="37" Width="112">
+		       <!--ComboBoxItem>64</ComboBoxItem>
             <ComboBoxItem>128</ComboBoxItem>
-            <ComboBoxItem>256</ComboBoxItem>
+            <ComboBoxItem>256</ComboBoxItem-->
           </ComboBox>
           <TextBlock Name="labelRtcmPort" FontSize="11"  Text="UDP Send Packet Burst&#10;Default 256 bytes"/>
           <ComboBox Name="cboxHTTP" Height="33" Width="80">
@@ -129,6 +129,7 @@
       <Button Name="btnSerialOK" Height="64" Width="105" Content="OK" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Command="{Binding SerialOK}">
       </Button>
        <Button  Classes="accent" Content="Close"  Height="63" Width="91" Command="{Binding Close}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Button Content="MessageBox" Command="{Binding MessageBox}" />
     </StackPanel>
     </DockPanel>
 </UserControl>  
