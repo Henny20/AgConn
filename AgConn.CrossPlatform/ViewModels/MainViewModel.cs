@@ -48,11 +48,7 @@ public class MainViewModel : ViewModelBase
                     CurentLon = _agConnService.curentLon;
                    OneToEight = _agConnService.oneToEight;
                  NineToSixteen = _agConnService.nineToSixteen;
-                  //  SkipCounter = service.skipCounter;
-                  // _UDPService.Client("127.0.0.1", 17777);
-                  // log = _UDPService.Send(new byte[] { 0x80, 0x81, 0x7F, 200, 3, 56, 0, 0, 0x47 });
-                 //  CurentLon = log;
-                   
+                                    
                 });
 
 
