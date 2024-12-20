@@ -27,29 +27,18 @@ public class MainViewModel : ViewModelBase
     private readonly IDialogService _dialogService;
     private readonly IStorageService _storage;
     private IAgConnService _agConnService;
-      private IUDPService _UDPService;
       
-      public string log;
+     public string log;
 
-    // private DispatcherTimer oneSecondLoopTimer = new DispatcherTimer();
-    // private DispatcherTimer ntripMeterTimer = new DispatcherTimer();
-  //  AgConnService service = new AgConnService();
-
-    ///
     public ICommand UDPCommand { get; }
 
-    public MainViewModel(IDialogService dialogService, IStorageService storage, IAgConnService agConnService, IUDPService UDPService)
+    public MainViewModel(IDialogService dialogService, IStorageService storage, IAgConnService agConnService)
     {
         this._dialogService = dialogService;
         this._storage = storage;
-        GPSData gpsData = new();
 
         _agConnService = agConnService;
-         _UDPService = UDPService;
-         
-        //  _UDPService.Server("0.0.0.0", 9999);
-         //  _UDPService.Server("127.0.0.1", 17777);
-           
+               
         var interval = TimeSpan.FromMilliseconds(4000);
         Observable
                 .Timer(interval, interval)
@@ -74,7 +63,7 @@ public class MainViewModel : ViewModelBase
         Activate = ReactiveCommand.Create(ActivateImpl, canActivate);
         Close = ReactiveCommand.Create(CloseImpl, canActivate);
         CommSettings = ReactiveCommand.CreateFromTask(ShowDialogImplAsync);
-        //UDPSettings = ReactiveCommand.CreateFromTask(DialogUDPSettingsImplAsync);
+      
         DialogNtrip = ReactiveCommand.CreateFromTask(DialogNtripImplAsync);
         DialogEthernet = ReactiveCommand.CreateFromTask(DialogEthernetImplAsync);
         DialogUDP = ReactiveCommand.CreateFromTask(DialogUDPImplAsync);
@@ -82,35 +71,21 @@ public class MainViewModel : ViewModelBase
          UDPMonitor = ReactiveCommand.CreateFromTask(MessageBoxImplAsync);
        
         //MenuItem4 = ReactiveCommand.CreateFromTask(DialogGPSDataImplAsync);
-            MenuItem4 = ReactiveCommand.CreateFromTask(GPSDataImplAsync);
+         MenuItem4 = ReactiveCommand.CreateFromTask(GPSDataImplAsync);
          EthernetSetup = ReactiveCommand.CreateFromTask(EthernetSetupImplAsync);
-        /********
-        OpenFile = ReactiveCommand.CreateFromTask(OpenFileImplAsync);
-        OpenFiles = ReactiveCommand.CreateFromTask(OpenFilesImplAsync);
-        OpenFolder = ReactiveCommand.CreateFromTask(OpenFolderImplAsync);
-        OpenFolders = ReactiveCommand.CreateFromTask(OpenFoldersImplAsync);
-        SaveFile = ReactiveCommand.CreateFromTask(SaveFileImplAsync);
-        ***/
+      
         MessageBox = ReactiveCommand.CreateFromTask(MessageBoxImplAsync);
-        MessageBoxMultiple = ReactiveCommand.CreateFromTask(MessageBoxMultipleImplAsync);
-        //
+        //example
         UDPCommand = ReactiveCommand.Create(() =>
         {
             //  SettingsUDP();
         });
+	//
         Quit = ReactiveCommand.Create(QuitMain);
         RelayTest = ReactiveCommand.Create(RelayTestImpl);
       
         _agConnService.Init();
-       
-                       
-                                //  if (Settings.Default.setUDP_isOn)
-        //    {
-         //       //Console.WriteLine("Settings.Default.setUDP_isOn");
-          //      _agConnService.LoadUDPNetwork();
-          //  }
-         
-           
+             
     }
 
     private void QuitMain()
@@ -142,13 +117,12 @@ public class MainViewModel : ViewModelBase
      private async Task LoadUDPNetworkAsync() {
           if (Settings.Default.setUDP_isOn)
             {
-                //Console.WriteLine("Settings.Default.setUDP_isOn");
-               await _agConnService.LoadUDPNetwork();
+                await _agConnService.LoadUDPNetwork();
             }
     }
  
     [Reactive]
-    public string? Output { get; set; } //not in use
+    public string? Output { get; set; } 
 
     [Reactive]
     public string CurrentLat { get; set; } = "-53.1234567";
@@ -197,11 +171,7 @@ public class MainViewModel : ViewModelBase
     public RxCommandUnit DialogUDP{ get; } 
     public RxCommandUnit DialogNtrip { get; }
     public RxCommandUnit DialogEthernet { get; }
-    //public RxCommandUnit OpenFile { get; }
-    //public RxCommandUnit OpenFiles { get; }
-    //public RxCommandUnit OpenFolder { get; }
-    //public RxCommandUnit OpenFolders { get; }
-    //public RxCommandUnit SaveFile { get; }
+  
     public RxCommandUnit MessageBox { get; }
     public RxCommandUnit MessageBoxMultiple { get; }
     public RxCommandUnit Quit { get; }
@@ -287,7 +257,7 @@ public class MainViewModel : ViewModelBase
 				
         log += "Age: " + _agConnService.ageData.ToString("N1") + Environment.NewLine;
         log += "VTG: " + _agConnService.headingTrueData.ToString("N2") + Environment.NewLine;
-				//    DualHeading = _agConnService.headingTrueDualData.ToString("N2"); VTG?
+				//    DualHeading = _agConnService.headingTrueDualData.ToString("N2"); 
         log += "Altitude: " + _agConnService.altitudeData.ToString("N1") + Environment.NewLine;
         log += "IMURoll: " +  _agConnService.imuRollData.ToString() + Environment.NewLine;
 	    log += "IMUPitch: " + _agConnService.imuPitchData.ToString() + Environment.NewLine;
@@ -306,104 +276,5 @@ public class MainViewModel : ViewModelBase
         var result = await _dialogService.ShowMessageBoxAsync(this, log, "GPS Data", MessageBoxButton.Ok);
         Output = result.ToString();
     }
-    /**********
-        private async Task OpenFileImplAsync()
-        {
-            var settings = new OpenFileDialogSettings
-            {
-                SuggestedStartLocation = await _storage.GetDownloadsFolderAsync()
-            };
-            var file = await _dialogService.ShowOpenFileDialogAsync(this, settings);
-            Output = file?.Path + Environment.NewLine;
-            if (file?.Path != null)
-            {
-                await ScanFileProgressAsync(file);
-            }
-        }
-
-        private async Task ScanFileProgressAsync(IDialogStorageFile file)
-        {
-            using var stream = file.OpenReadAsync();
-            Output += "File opened." + Environment.NewLine;
-            var outputHeader = string.Empty;
-            long length = 0;
-
-            IProgress<long> progress = new SynchronousProgress<long>(value =>
-            {
-                Output = outputHeader + ((float)value / length).ToString("P1") + Environment.NewLine;
-            });
-
-            await stream.ContinueWith(
-                async t =>
-                {
-                    using var ms = new MemoryStream();
-                    var streamResult = stream.Result;
-                    length = streamResult.Length;
-                    Output += "Result size: " + streamResult.Length + " starting copy to memory" + Environment.NewLine;
-                    outputHeader = Output;
-                    await streamResult.CopyToAsync(ms, progress, default, 1024);
-                    Output += "Done" + Environment.NewLine;
-                    ms.Position = 0;
-                });
-        }
-
-        private async Task OpenFilesImplAsync()
-        {
-            var settings = new OpenFileDialogSettings
-            {
-                SuggestedStartLocation = await _storage.GetDownloadsFolderAsync()
-            };
-            var files = await _dialogService.ShowOpenFilesDialogAsync(this, settings);
-            Output = string.Join(Environment.NewLine, files.Select(x => x?.Path?.ToString() ?? ""));
-        }
-
-        private async Task OpenFolderImplAsync()
-        {
-            var settings = new OpenFolderDialogSettings
-            {
-                SuggestedStartLocation = await _storage.GetDownloadsFolderAsync()
-            };
-            var folder = await _dialogService.ShowOpenFolderDialogAsync(this, settings);
-            Output = folder?.Path?.ToString();
-        }
-
-        private async Task OpenFoldersImplAsync()
-        {
-            var settings = new OpenFolderDialogSettings
-            {
-                SuggestedStartLocation = await _storage.GetDownloadsFolderAsync()
-            };
-            var folders = await _dialogService.ShowOpenFoldersDialogAsync(this, settings);
-            Output = string.Join(Environment.NewLine, folders.Select(x => x?.Path?.ToString() ?? ""));
-        }
-
-        private async Task SaveFileImplAsync()
-        {
-            var settings = new SaveFileDialogSettings
-            {
-                SuggestedStartLocation = await _storage.GetDownloadsFolderAsync()
-            };
-            var file = await _dialogService.ShowSaveFileDialogAsync(this, settings);
-            Output = file?.Path?.ToString();
-        }
-        *****/
-
-   // private async Task MessageBoxImplAsync()
-   // {
-  //      var result = await _dialogService.ShowMessageBoxAsync(this, "Do you want it?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
-   //     Output = result.ToString();
-  //  }
-
-    private async Task MessageBoxMultipleImplAsync()
-    {
-        var t1 = _dialogService.ShowMessageBoxAsync(this, "First message box", "Go", MessageBoxButton.YesNo, MessageBoxImage.Exclamation).ConfigureAwait(false);
-        await Task.Delay(1000).ConfigureAwait(false);
-        var t2 = _dialogService.ShowMessageBoxAsync(this, "Second message box", "Again", MessageBoxButton.YesNo, MessageBoxImage.Exclamation).ConfigureAwait(false);
-        await Task.Delay(1000).ConfigureAwait(false);
-        var t3 = _dialogService.ShowMessageBoxAsync(this, "Third message box", "Once More!", MessageBoxButton.YesNo, MessageBoxImage.Exclamation).ConfigureAwait(false);
-        var r1 = await t1;
-        var r2 = await t2;
-        var r3 = await t3;
-        Output = r1 + Environment.NewLine + r2 + Environment.NewLine + r3;
-    }
+    
 }
