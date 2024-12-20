@@ -19,7 +19,7 @@ namespace AgConn.CrossPlatform.ViewModels;
 
 public class NtripViewModel : ViewModelBase, IModalDialogViewModel, ICloseable, IViewLoaded, IViewClosed
 {
-   // private ObservableCollection<string> _items;
+   
     private readonly IDialogService _dialogService;
     private IAgConnService _agConnService;
     
@@ -131,22 +131,14 @@ public class NtripViewModel : ViewModelBase, IModalDialogViewModel, ICloseable, 
     {
         IsNTRIPOn = Properties.Settings.Default.setNTRIP_isOn;
 
-        ///if (!IsNTRIPOn) Control1 = false; lastig
-       // if (!OperatingSystem.IsAndroid())
-      //  {
-            string hostName = Dns.GetHostName(); // Retrieve the Name of HOST
-            HostName = hostName;
+        ///if (!IsNTRIPOn) Control1 = false; 
+   
+         string hostName = Dns.GetHostName(); // Retrieve the Name of HOST
+         HostName = hostName;
 
-            IPAddress[] ipaddress = Dns.GetHostAddresses(hostName);
-            GetIP4AddressList();
-      //  }
-      //  if (OperatingSystem.IsAndroid())
-      //  {
-        //    HostName = NetService.getHostName();
-        //    GetAllLocalValidIp4Addresses();
-     //   }
-
-
+         IPAddress[] ipaddress = Dns.GetHostAddresses(hostName);
+         GetIP4AddressList();
+    
 
         ToSerial = Properties.Settings.Default.setNTRIP_sendToSerial;
         ToUDP = Properties.Settings.Default.setNTRIP_sendToUDP;
@@ -191,16 +183,7 @@ public class NtripViewModel : ViewModelBase, IModalDialogViewModel, ICloseable, 
             }
         }
     }
-/****
-    public void GetAllLocalValidIp4Addresses()
-    {
-        Items.Clear();
-        foreach (IPAddress ipa in NetService.GetAllLocalValidIp4Addresses())
-        {
-            Items.Add(ipa.ToString());
-        }
-    }
-****/
+
     private void CloseImpl()
     {
          Properties.Settings.Default.setNTRIP_casterIP = CasterIP;
@@ -365,9 +348,6 @@ public class NtripViewModel : ViewModelBase, IModalDialogViewModel, ICloseable, 
     private void GetIPImpl()
     {
 
-       // if (OperatingSystem.IsAndroid()) { Console.WriteLine("Not implemented yet"); }
-      //  else
-       // {
             string actualIP = EnterURL.Trim();
             try
             {
