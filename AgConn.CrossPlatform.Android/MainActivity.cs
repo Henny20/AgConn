@@ -47,7 +47,6 @@ public class MainActivity : AvaloniaMainActivity<App>
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
         AgConn.CrossPlatform.RegisteredServices.UsbService = new AndroidUsbService();
-      // AgConn.CrossPlatform.RegisteredServices.NetService = new AndroidNetService();
         return base.CustomizeAppBuilder(builder)
             .UseReactiveUI();
     }
@@ -59,20 +58,15 @@ public class MainActivity : AvaloniaMainActivity<App>
     }
 
     public static List<string> adapter = null;
-   // public static List<System.Net.IPAddress> ipAddresses = null;
-
+ 
     public static string hostname = "";
 
     static readonly string TAG = typeof(MainActivity).Name;
     const string ACTION_USB_PERMISSION = "com.CompanyName.AAgIO.USB_PERMISSION";
 
     UsbManager usbManager;
-    // ListView listView;
-    //  TextView progressBarTitle;
-    //  ProgressBar progressBar;
     ConnectivityManager connMgr;
-
-    // UsbSerialPortAdapter adapter;
+    
     BroadcastReceiver detachedReceiver;
     UsbSerialPort selectedPort;
 
@@ -83,32 +77,15 @@ public class MainActivity : AvaloniaMainActivity<App>
     {
         base.OnCreate(bundle);
 
-        // Set our view from the "main" layout resource
-        //SetContentView(Resource.Layout.Main);
-
         usbManager = GetSystemService(Context.UsbService) as UsbManager;
-        // listView = FindViewById<ListView>(Resource.Id.deviceList);
-        // progressBar = FindViewById<ProgressBar>(Resource.Id.progressBar);
-        //  progressBarTitle = FindViewById<TextView>(Resource.Id.progressBarTitle);
-
+      
         connMgr = (ConnectivityManager)GetSystemService(Context.ConnectivityService);
-     
-        //    WifiManager wifiManager = (WifiManager)GetSystemService(Service.WifiService);  
-        //  hostname = wifiManager.ConnectionInfo.SSID.ToString();
-        // hostname = wifiManager.ConnectionInfo.IpAddress.ToString();
-
+    
     }
 
     protected override async void OnResume()
     {
         base.OnResume();
-
-        // adapter = new UsbSerialPortAdapter(this);
-        // listView.Adapter = adapter;
-
-        // listView.ItemClick += async (sender, e) => {
-        //    await OnItemClick(sender, e);
-        // };
 
         await PopulateListAsync();
 
@@ -116,8 +93,6 @@ public class MainActivity : AvaloniaMainActivity<App>
         detachedReceiver = new UsbDeviceDetachedReceiver(this);
         RegisterReceiver(detachedReceiver, new IntentFilter(UsbManager.ActionUsbDeviceDetached));
 
-       //netReceiver = new NetBroadcastReceiver(this);
-       //RegisterReceiver(netReceiver, new IntentFilter(ConnectivityManager.ConnectivityAction));
     }
     protected override void OnPause()
     {
@@ -127,10 +102,6 @@ public class MainActivity : AvaloniaMainActivity<App>
         var temp = detachedReceiver; // copy reference for thread safety
         if (temp != null)
             UnregisterReceiver(temp);
-
-      //  var tmp = netReceiver;
-      //  if (tmp != null)
-       //     UnregisterReceiver(tmp);
     }
     /***
     protected override void OnStop(){
@@ -157,102 +128,25 @@ public class MainActivity : AvaloniaMainActivity<App>
 
     async Task PopulateListAsync()
     {
-        //ShowProgressBar();
-
         Log.Info(TAG, "Refreshing device list ...");
-
+	
         var drivers = await FindAllDriversAsync(usbManager);
         adapter = new List<string>();
-        //adapter.Clear();
+
         foreach (var driver in drivers)
         {
             var ports = driver.Ports;
             Log.Info(TAG, string.Format("+ {0}: {1} port{2}", driver, ports.Count, ports.Count == 1 ? string.Empty : "s"));
             foreach (var port in ports)
                 adapter.Add(port.GetDriver().GetDevice().ProductId.ToString());
-            Log.Info(TAG, "Succes ermee ...");
+            Log.Info(TAG, "Succes ...");
         }
 
-        //adapter.NotifyDataSetChanged();
-        //progressBarTitle.Text = string.Format("{0} device{1} found", adapter.Count, adapter.Count == 1 ? string.Empty : "s");
         Toast.MakeText(this, string.Format("{0} device{1} found", adapter.Count, adapter.Count == 1 ? string.Empty : "s"), ToastLength.Short).Show();
-        //HideProgressBar();
+
         Log.Info(TAG, "Done refreshing, " + adapter.Count + " entries found.");
     }
-    /*******
-     async Task NetsAsync()
-     {
-          var inetEnum = Java.Net.NetworkInterface.NetworkInterfaces;
-            if (inetEnum is null)
-            {
-                ipAddresses = new List<System.Net.IPAddress>();
-            }
-
-            ipAddresses = new List<System.Net.IPAddress>();
-            foreach (var interfaces in Java.Util.Collections.List(inetEnum))
-            {
-                var addresses = (interfaces as Java.Net.NetworkInterface)?.InetAddresses;
-                if (addresses == null)
-                {
-                    continue;
-                }
-
-                foreach (Java.Net.InetAddress address in Java.Util.Collections.List(addresses))
-                {
-                    if (address.HostAddress == null || address.IsLoopbackAddress || address is not Java.Net.Inet4Address)
-                    {
-                        continue;
-                    }
-                    ipAddresses.Add(System.Net.IPAddress.Parse(address.HostAddress));
-                }
-            }
-    }
-      **********/ 
-     
-    void ShowProgressBar()
-    {
-        // progressBar.Visibility = ViewStates.Visible;
-        //   progressBarTitle.Text = GetString(Resource.String.refreshing);
-    }
-
-    void HideProgressBar()
-    {
-        // progressBar.Visibility = ViewStates.Invisible;
-    }
-/*********
-    class NetBroadcastReceiver : BroadcastReceiver
-    {
-        readonly MainActivity activity;
-
-        public NetBroadcastReceiver(MainActivity activity)
-        {
-            this.activity = activity;
-        }
-        public async override void OnReceive(Context context, Intent intent)
-        {
-            NetworkInfo networkInfo = activity.connMgr.ActiveNetworkInfo;
-            hostname = networkInfo.TypeName;
-            Network[] networks = activity.connMgr.GetAllNetworks();
-            for (int i = 0; i < networks.Length; i++)
-				{
-					NetworkCapabilities capabilities = activity.connMgr.GetNetworkCapabilities(networks[i]);
-				}
-				*********/
-            /***
-            var ifaces = Java.Net.NetworkInterface.NetworkInterfaces;
-            while (ifaces.HasMoreElements)
-            {
-                var iface = ifaces.NextElement().JavaCast<Java.Net.NetworkInterface>();
-                // ...
-            }
-            ****/
-            /**********
-            await activity.NetsAsync(); //causing problems?
-           
-        }
-    }
-************/
-
+  
     #region UsbDeviceDetachedReceiver implementation
 
     class UsbDeviceDetachedReceiver
