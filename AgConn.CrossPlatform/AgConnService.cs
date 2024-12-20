@@ -108,22 +108,6 @@ namespace AgConn.CrossPlatform
 
         public AgConnService()
         {
-        /******
-            oneSecondLoopTimer.Interval = TimeSpan.FromMilliseconds(4000);
-            oneSecondLoopTimer.IsEnabled = true;
-            oneSecondLoopTimer.Tick += oneSecondLoopTimer_Tick;
-            oneSecondLoopTimer.Start();
-
-          ntripMeterTimer.Interval = TimeSpan.FromMilliseconds(50);
-           ntripMeterTimer.IsEnabled = true;
-          ntripMeterTimer.Tick += ntripMeterTimer_Tick;
-          ntripMeterTimer.Start();
-
-            //currentLat = "***********";
-          
-            Init();
-            *******/
-
         }
 
         // private void FormLoop_Load(object sender, System.EventArgs e)
@@ -586,7 +570,7 @@ namespace AgConn.CrossPlatform
                 #endregion
             }
         }
-        /************TODO
+        /************TODO??
                 private void btnSlide_Click(object sender, RoutedEventArgs e)
                 {
                     if (this.Width < 600)
