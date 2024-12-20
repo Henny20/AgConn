@@ -114,15 +114,15 @@ namespace AgConn.CrossPlatform
         public void Init()
         {
         
-         oneSecondLoopTimer.Interval = TimeSpan.FromMilliseconds(4000);
-            oneSecondLoopTimer.IsEnabled = true;
-            oneSecondLoopTimer.Tick += oneSecondLoopTimer_Tick;
-            oneSecondLoopTimer.Start();
-
-          ntripMeterTimer.Interval = TimeSpan.FromMilliseconds(50);
-           ntripMeterTimer.IsEnabled = true;
-          ntripMeterTimer.Tick += ntripMeterTimer_Tick;
-          ntripMeterTimer.Start();
+	   oneSecondLoopTimer.Interval = TimeSpan.FromMilliseconds(4000);
+	   oneSecondLoopTimer.IsEnabled = true;
+	   oneSecondLoopTimer.Tick += oneSecondLoopTimer_Tick;
+	   oneSecondLoopTimer.Start();
+	
+	   ntripMeterTimer.Interval = TimeSpan.FromMilliseconds(50);
+	   ntripMeterTimer.IsEnabled = true;
+	   ntripMeterTimer.Tick += ntripMeterTimer_Tick;
+	   ntripMeterTimer.Start();
           
             // Deals with slash vs backslash
             if (Settings.Default.setF_workingDirectory == "Default")
